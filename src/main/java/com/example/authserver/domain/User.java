@@ -53,10 +53,15 @@ public class User extends AuditingCreateEntity {
         this.password = password;
     }
 
+    public void addUserRole(UserRole userRole){
+        roleSet.add(userRole);
+    }
+
     @Builder
-    private User(String email, String name, String password){
+    private User(String email, String name, String password, boolean fromSocial){
         this.email = email;
         this.name = name;
         this.password = password;
+        this.fromSocial = fromSocial;
     }
 }
