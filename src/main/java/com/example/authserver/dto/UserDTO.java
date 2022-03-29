@@ -1,4 +1,4 @@
-package com.example.authserver.controller;
+package com.example.authserver.dto;
 
 
 import lombok.AccessLevel;

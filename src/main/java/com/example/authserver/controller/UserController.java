@@ -1,5 +1,6 @@
 package com.example.authserver.controller;
 
+import com.example.authserver.dto.UserDTO;
 import com.example.authserver.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.PostMapping;
