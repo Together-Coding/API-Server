@@ -1,5 +1,6 @@
 package com.example.authserver.domain;
 
+import com.example.authserver.domain.base.AuditingCreateEntity;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -12,14 +13,20 @@ import javax.persistence.*;
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Table(name = "attendance")
-public class Attendance {
+public class Attendance extends AuditingCreateEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "course_id")
+    @Column(length = 15, nullable = false)
+    @Enumerated(EnumType.STRING)
+    private Role role = Role.STUDENT;
+
+    @OneToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "lesson_id")
     @OnDelete(action = OnDeleteAction.CASCADE)
-    private Course course;
+    private Lesson lesson;
+
+
 }

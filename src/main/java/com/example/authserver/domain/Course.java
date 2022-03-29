@@ -1,9 +1,9 @@
 package com.example.authserver.domain;
 
 import com.example.authserver.domain.base.AuditingCreateUpdateEntity;
-import lombok.AccessLevel;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.*;
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
 
 
 import javax.persistence.*;
@@ -23,5 +23,21 @@ public class Course extends AuditingCreateUpdateEntity {
 
     private String password;
 
+    private boolean accessible;
 
+    private boolean active;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "user_id")
+    @OnDelete(action = OnDeleteAction.CASCADE)
+    private User user;
+
+    @Builder
+    private Course(String name, String password, boolean accessible, boolean active, User user){
+        this.name = name;
+        this.password = password;
+        this.accessible = accessible;
+        this.active = active;
+        this.user = user;
+    }
 }

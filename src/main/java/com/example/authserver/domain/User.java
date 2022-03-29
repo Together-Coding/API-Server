@@ -24,22 +24,20 @@ public class User extends AuditingCreateEntity {
     private Long id;
 
     @Column(nullable = false, length = 60)
-    @Length(min = 1, max = 60, message = "사이즈를 확인하세요.")
-    @NotBlank(message = "이메일은 필수 값 입니다.")
-    @Email
     private String email;
 
     @JsonIgnore
     @Column(nullable = false, length = 80)
-    @NotBlank(message = "비밀번호는 필수 값 입니다.")
     private String password;
 
     @Column(nullable = false, length = 20)
-    @Length(min = 1, max = 20, message = "사이즈를 확인하세요.")
-    @NotBlank(message = "이름은 필수 값 입니다.")
     private String name;
 
     private boolean fromSocial;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "attendance_id")
+    private Attendance attendance;
 
     @ElementCollection(fetch = FetchType.LAZY)
     @JsonIgnore
