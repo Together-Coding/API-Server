@@ -55,9 +55,7 @@ public class ApiLoginFilter extends AbstractAuthenticationProcessingFilter {
         return getAuthenticationManager().authenticate(authToken);
     }
 
-    /**
-     * 로그인이 성공하면 이메일을 payload로 jwt를 발급합니다.
-     */
+
     @Override
     protected void successfulAuthentication(HttpServletRequest request,
                                             HttpServletResponse response,

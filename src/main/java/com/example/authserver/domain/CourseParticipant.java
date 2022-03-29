@@ -23,17 +23,13 @@ public class CourseParticipant extends AuditingCreateEntity {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "course_id")
     @OnDelete(action = OnDeleteAction.CASCADE)
-    @Column(nullable = false)
     private Course course;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id")
     @OnDelete(action = OnDeleteAction.CASCADE)
-    @Column(nullable = false)
     private User user;
 
-    @Column(nullable = false)
-    private String role;
-
-
+    @Enumerated(EnumType.STRING)
+    private Role role;
 }

@@ -22,12 +22,10 @@ public class Lesson {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "course_id")
     @OnDelete(action = OnDeleteAction.CASCADE)
-    @Column(nullable = false)
     private Course course;
 
     @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "lesson_file_id")
     @OnDelete(action = OnDeleteAction.CASCADE)
-    @Column(nullable = true)
     private Lesson lessonFile;
 }

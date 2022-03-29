@@ -19,7 +19,6 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 
 @Configuration
 @EnableWebSecurity
-@EnableGlobalMethodSecurity(prePostEnabled = true, securedEnabled = true)
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Autowired
@@ -52,7 +51,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
     private final String[] excludePaths =
             new String[]{
-                    "/auth/signup", "/auth/signin", "/h2-console/**"};
+                    "/auth/signup", "/auth/signin", "/h2-console/**", "/"};
 
     @Bean
     public ApiCheckFilter apiCheckFilter() {
