@@ -15,7 +15,7 @@ public class JWTUtil {
     /**
      * 임의의 비밀키
      */
-    private final String SECRET_KEY = "q1!w2@e3#r4$t5%";
+    private final String SECRET_KEY = "INHA!@!^!^^%COMputerSciEnCE16!^HiTEcH";
 
     private final long EXPIRE = 60 * 24 * 30;
 

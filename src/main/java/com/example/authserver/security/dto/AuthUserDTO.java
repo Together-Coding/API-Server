@@ -11,7 +11,6 @@ import java.util.Map;
 
 @Slf4j
 @Getter
-// 도메인의 User가 아닌 UserDetails의 User
 public class AuthUserDTO extends User implements OAuth2User {
 
     private String email;
