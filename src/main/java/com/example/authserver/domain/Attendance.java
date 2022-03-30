@@ -19,10 +19,6 @@ public class Attendance extends AuditingCreateEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(length = 15, nullable = false)
-    @Enumerated(EnumType.STRING)
-    private Role role = Role.STUDENT;
-
     @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "lesson_id")
     @OnDelete(action = OnDeleteAction.CASCADE)

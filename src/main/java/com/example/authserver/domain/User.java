@@ -35,10 +35,6 @@ public class User extends AuditingCreateEntity {
 
     private boolean fromSocial;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "attendance_id")
-    private Attendance attendance;
-
     @ElementCollection(fetch = FetchType.LAZY)
     @JsonIgnore
     private Set<UserRole> roleSet = new HashSet<>();

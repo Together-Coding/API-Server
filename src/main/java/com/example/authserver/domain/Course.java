@@ -21,23 +21,20 @@ public class Course extends AuditingCreateUpdateEntity {
     @Column(nullable = false, length = 100)
     private String name;
 
+    private String description;
+
     private String password;
 
     private boolean accessible;
 
     private boolean active;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "user_id")
-    @OnDelete(action = OnDeleteAction.CASCADE)
-    private User user;
-
     @Builder
-    private Course(String name, String password, boolean accessible, boolean active, User user){
+    private Course(String name, String description ,String password, boolean accessible, boolean active){
         this.name = name;
+        this.description = description;
         this.password = password;
         this.accessible = accessible;
         this.active = active;
-        this.user = user;
     }
 }

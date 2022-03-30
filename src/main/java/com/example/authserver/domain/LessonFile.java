@@ -19,4 +19,9 @@ public class LessonFile {
     private Long id;
 
     private String url;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "lesson_id")
+    @OnDelete(action = OnDeleteAction.CASCADE)
+    private Lesson lesson;
 }

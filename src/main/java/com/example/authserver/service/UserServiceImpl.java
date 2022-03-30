@@ -9,6 +9,8 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import javax.persistence.EntityNotFoundException;
+
 @Log4j2
 @Service
 @RequiredArgsConstructor
@@ -35,6 +37,17 @@ public class UserServiceImpl implements UserService{
         userRepository.save(user);
     }
 
+    @Transactional
+    public void updateUser(Long userId, String name){
+        User user = this.getUser(userId);
+        user.updateName(name);
+    }
+
+    @Transactional
+    public User getUser(Long userId){
+        return userRepository.findById(userId)
+                .orElseThrow(() -> new EntityNotFoundException("can not find user. input userId: " + userId));
+    }
 
 
 }
