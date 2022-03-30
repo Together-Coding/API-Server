@@ -1,5 +1,6 @@
 package com.example.authserver.domain;
 
+import com.example.authserver.domain.base.AuditingCreateEntity;
 import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
@@ -18,7 +19,7 @@ import javax.persistence.*;
                 name = "part_uk",
                 columnNames = {"user_Id", "course_Id"}
         )})
-public class Participant {
+public class Participant extends AuditingCreateEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
