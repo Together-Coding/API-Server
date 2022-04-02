@@ -1,5 +1,6 @@
 package com.example.authserver.repository;
 
+import com.example.authserver.domain.Course;
 import com.example.authserver.domain.Participant;
 import com.example.authserver.domain.Role;
 import org.springframework.data.jpa.repository.EntityGraph;
@@ -14,6 +15,9 @@ public interface ParticipantRepository extends JpaRepository<Participant, Long> 
 
     @EntityGraph(attributePaths = {"user"}, type = EntityGraph.EntityGraphType.LOAD)
     List<Participant> getAllByCourse_IdAndRole(Long courseId, Role role);
+
+    @EntityGraph(attributePaths = {"course"}, type = EntityGraph.EntityGraphType.LOAD)
+    List<Course> getAllByUser_IdAndRoleOrderByIdDesc(Long userId, Role role);
 
 
 }

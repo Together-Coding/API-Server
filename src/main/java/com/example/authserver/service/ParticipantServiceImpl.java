@@ -1,6 +1,8 @@
 package com.example.authserver.service;
 
+import com.example.authserver.domain.Course;
 import com.example.authserver.domain.Participant;
+import com.example.authserver.domain.Role;
 import com.example.authserver.domain.User;
 import com.example.authserver.dto.ParticipantDTO;
 import com.example.authserver.repository.ParticipantRepository;
@@ -20,9 +22,7 @@ public class ParticipantServiceImpl implements ParticipantService {
     private ParticipantRepository participantRepository;
 
     /**
-     *
-     * @param courseId 코스pk
-     * @return 수업듣는 사람 목록
+     * 코스Id로 코스에 참가하는 사람들 목록 반환
      */
     @Override
     @Transactional
@@ -39,5 +39,17 @@ public class ParticipantServiceImpl implements ParticipantService {
         }
         return dto;
     }
+
+    @Transactional
+    public void getCoursesByStudent(Long userId){
+        List<Course> courses = participantRepository.getAllByUser_IdAndRoleOrderByIdDesc(userId, Role.STUDENT);
+
+    }
+
+    @Transactional
+    public void getCoursesByTeacher(Long userId){
+        List<Course> courses = participantRepository.getAllByUser_IdAndRoleOrderByIdDesc(userId, Role.TEACHER);
+    }
+
 
 }
