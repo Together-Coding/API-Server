@@ -4,6 +4,7 @@ import com.example.authserver.domain.Course;
 import com.example.authserver.domain.Participant;
 import com.example.authserver.domain.Role;
 import com.example.authserver.domain.User;
+import com.example.authserver.dto.CourseDTO;
 import com.example.authserver.repository.CourseRepository;
 import com.example.authserver.repository.ParticipantRepository;
 import lombok.RequiredArgsConstructor;
@@ -13,6 +14,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.EntityNotFoundException;
+import java.util.ArrayList;
 import java.util.List;
 
 
@@ -24,16 +26,18 @@ public class CourseServiceImpl implements CourseService {
     private final CourseRepository courseRepository;
     private final UserService userService;
     private final ParticipantRepository participantRepository;
+    private final ParticipantService participantService;
     private final PasswordEncoder passwordEncoder;
 
 
     @Override
     @Transactional
-    public Long register(String name, String password, String teacherEmail, String[] emails) {
+    public Long register(String name, String password, String teacherEmail, String description, String[] emails) {
         String enPw = passwordEncoder.encode(password);
         Course course = Course.builder()
                 .name(name)
                 .password(enPw)
+                .description(description)
                 .accessible(0)
                 .active(0)
                 .build();
@@ -69,11 +73,12 @@ public class CourseServiceImpl implements CourseService {
 
     @Override
     @Transactional
-    public void addUser(String teacherEmail, String email, Long courseId) {
+    public Long addUser(String teacherEmail, String email, Long courseId) {
         List<Participant> teachers = participantRepository.getAllByCourse_IdAndRole(courseId, Role.TEACHER);
         Course course = courseRepository.findById(courseId)
                 .orElseThrow(() -> new EntityNotFoundException("can not find course. input courseId: " + courseId));
         User user = userService.getUserByEmail(email);
+        // TODO : 여기 뭔가 이상한데...
         for (Participant teacher : teachers) {
             if (teacher.getUser().getEmail().equals(teacherEmail)) {
                 Participant student = Participant.builder()
@@ -83,9 +88,12 @@ public class CourseServiceImpl implements CourseService {
                         .build();
 
                 participantRepository.save(student);
-                return;
+                return student.getId();
+            } else {
+                throw new RuntimeException("권한이 없습니다.");
             }
         }
+        return null;
     }
 
     @Override
@@ -94,5 +102,30 @@ public class CourseServiceImpl implements CourseService {
         courseRepository.deleteById(courseId);
     }
 
+    @Override
+    @Transactional
+    public List<CourseDTO.Response> getCoursesWhereIamStudent(Long userId) {
+        List<Participant> participants = participantService.getCoursesThatIamStudentByUserId(userId);
+        return getCourseResp(participants);
+    }
+
+    @Override
+    @Transactional
+    public List<CourseDTO.Response> getCoursesWhereIamTeacher(Long userId) {
+        List<Participant> participants = participantService.getCoursesThatIamTeacherByUserId(userId);
+        return getCourseResp(participants);
+    }
+
+    private List<CourseDTO.Response> getCourseResp(List<Participant> participants) {
+        List<CourseDTO.Response> responses = new ArrayList<>();
+        for (Participant participant : participants) {
+            responses.add(CourseDTO.Response.builder()
+                    .courseId(participant.getCourse().getId())
+                    .name(participant.getCourse().getName())
+                    .description(participant.getCourse().getDescription())
+                    .build());
+        }
+        return responses;
+    }
 
 }

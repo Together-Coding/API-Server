@@ -1,15 +1,33 @@
 package com.example.authserver.dto;
 
+import lombok.Builder;
 import lombok.Getter;
 
-@Getter
+
 public class CourseDTO {
 
-    private String name;
+    @Getter
+    public static class Request {
 
-    private String password;
+        private String name;
 
-    private String teacherName;
+        private String password;
 
-    private String[] participants;
+        private String teacherName;
+
+        private String description;
+
+        private String[] participants;
+    }
+
+    @Getter
+    @Builder
+    public static class Response {
+
+        private Long courseId;
+
+        private String name;
+
+        private String description;
+    }
 }

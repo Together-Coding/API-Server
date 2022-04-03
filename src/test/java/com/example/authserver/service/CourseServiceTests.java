@@ -1,14 +1,19 @@
 package com.example.authserver.service;
 
-
+import com.example.authserver.domain.Participant;
+import com.example.authserver.repository.ParticipantRepository;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.test.context.junit.jupiter.SpringExtension;
+import org.springframework.test.context.ActiveProfiles;
 
-@ExtendWith(SpringExtension.class)
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+
 @SpringBootTest
+@ActiveProfiles("dev")
 public class CourseServiceTests {
 
     @Autowired
@@ -17,29 +22,37 @@ public class CourseServiceTests {
     @Autowired
     private UserService userService;
 
+    @Autowired
+    private ParticipantRepository participantRepository;
+
+    @DisplayName("course에 수강생 추가")
     @Test
-    void insertDummies(){
-        String[] emails = new String[5];
-        emails[0] = "part1@naver.com";
-        emails[1] = "part2@naver.com";
-        emails[2] = "part3@naver.com";
-        emails[3] = "part4@naver.com";
-        emails[4] = "part5@naver.com";
-        courseService.register(
-                "컴퓨터 공학 종합 설계",
-                "testPassword",
-                "chasw326@naver.com",
-                emails
+    void Should_AddUserToCourse() {
+        int rnd = (int) (Math.random() * 10000);
+        rnd += 10000;
+        userService.signup("student" + rnd + "@naver.com", "password1", "student" + rnd);
+        Long participantId = courseService.addUser(
+                "teacher1@naver.com",
+                "student" + rnd + "@naver.com",
+                1L
         );
+        Participant participant = participantRepository.getParticipantById(participantId);
+        assertEquals("student" + rnd + "@naver.com", participant.getUser().getEmail());
     }
 
+    @DisplayName("학생이 다른 학생 추가할 때 예외던짐")
     @Test
-    void insertUsers(){
-        userService.signup("part1@naver.com", "password1", "part1");
-        userService.signup("part2@naver.com", "password2", "part2");
-        userService.signup("part3@naver.com", "password3", "part3");
-        userService.signup("part4@naver.com", "password4", "part4");
-        userService.signup("part5@naver.com", "password5", "part5");
-        userService.signup("chasw326@naver.com", "password326", "part326");
+    void Should_ThrowException_When_StudentAddUser() {
+        int rnd = (int) (Math.random() * 10000);
+        rnd += 10000;
+        userService.signup("student" + rnd + "@naver.com", "password1", "student" + rnd);
+        int finalRnd = rnd;
+        Throwable ex = assertThrows(RuntimeException.class, () ->
+                courseService.addUser(
+                        "student1@naver.com",
+                        "student" + finalRnd + "@naver.com",
+                        1L));
+        assertEquals("권한이 없습니다.", ex.getMessage());
     }
+
 }

@@ -1,10 +1,18 @@
 package com.example.authserver.service;
 
+import com.example.authserver.dto.CourseDTO;
+
+import java.util.List;
+
 public interface CourseService {
 
-    Long register(String name, String password, String teacherEmail ,String[] emails);
+    Long register(String name, String password, String teacherEmail, String description, String[] emails);
 
-    void addUser(String teacherEmail, String email, Long courseId);
+    Long addUser(String teacherEmail, String email, Long courseId);
 
     void delete(Long courseId);
+
+    List<CourseDTO.Response> getCoursesWhereIamTeacher(Long userId);
+
+    List<CourseDTO.Response> getCoursesWhereIamStudent(Long userId);
 }

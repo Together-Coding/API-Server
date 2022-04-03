@@ -19,7 +19,7 @@ import java.util.List;
 @RequiredArgsConstructor
 public class ParticipantServiceImpl implements ParticipantService {
 
-    private ParticipantRepository participantRepository;
+    private final ParticipantRepository participantRepository;
 
     /**
      * 코스Id로 코스에 참가하는 사람들 목록 반환
@@ -40,15 +40,16 @@ public class ParticipantServiceImpl implements ParticipantService {
         return dto;
     }
 
-    @Transactional
-    public void getCoursesByStudent(Long userId){
-        List<Course> courses = participantRepository.getAllByUser_IdAndRoleOrderByIdDesc(userId, Role.STUDENT);
-
+    @Override
+    @Transactional(readOnly = true)
+    public List<Participant> getCoursesThatIamStudentByUserId(Long userId){
+        return participantRepository.getParticipantsByUser_IdAndRoleOrderByIdDesc(userId, Role.STUDENT);
     }
 
-    @Transactional
-    public void getCoursesByTeacher(Long userId){
-        List<Course> courses = participantRepository.getAllByUser_IdAndRoleOrderByIdDesc(userId, Role.TEACHER);
+    @Override
+    @Transactional(readOnly = true)
+    public List<Participant> getCoursesThatIamTeacherByUserId(Long userId){
+        return participantRepository.getParticipantsByUser_IdAndRoleOrderByIdDesc(userId, Role.TEACHER);
     }
 
 
