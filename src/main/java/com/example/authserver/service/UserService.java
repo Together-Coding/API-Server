@@ -9,4 +9,6 @@ public interface UserService {
     User getUser(Long userId);
 
     User getUserByEmail(String email);
+
+    void updateUser(Long userId, String name);
 }

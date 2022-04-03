@@ -34,14 +34,16 @@ public class CourseServiceImpl implements CourseService {
         Course course = Course.builder()
                 .name(name)
                 .password(enPw)
-                .accessible(false)
-                .active(false)
+                .accessible(0)
+                .active(0)
                 .build();
 
         courseRepository.save(course);
 
         User owner = userService.getUserByEmail(teacherEmail);
 
+
+        // 레슨 추가 해야함
         Participant teacher = Participant.builder()
                 .course(course)
                 .user(owner)
@@ -65,6 +67,7 @@ public class CourseServiceImpl implements CourseService {
         return course.getId();
     }
 
+    @Override
     @Transactional
     public void addUser(String teacherEmail, String email, Long courseId) {
         List<Participant> teachers = participantRepository.getAllByCourse_IdAndRole(courseId, Role.TEACHER);
@@ -85,6 +88,7 @@ public class CourseServiceImpl implements CourseService {
         }
     }
 
+    @Override
     @Transactional
     public void delete(Long courseId) {
         courseRepository.deleteById(courseId);

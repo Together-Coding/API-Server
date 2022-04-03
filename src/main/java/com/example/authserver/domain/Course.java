@@ -25,12 +25,15 @@ public class Course extends AuditingCreateUpdateEntity {
 
     private String password;
 
-    private boolean accessible;
+    // boolean 생각 점
+    @Transient
+    private int accessible;
 
-    private boolean active;
+    @Transient
+    private int active;
 
     @Builder
-    private Course(String name, String description ,String password, boolean accessible, boolean active){
+    private Course(String name, String description ,String password, int accessible, int active){
         this.name = name;
         this.description = description;
         this.password = password;

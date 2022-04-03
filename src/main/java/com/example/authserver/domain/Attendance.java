@@ -24,5 +24,9 @@ public class Attendance extends AuditingCreateEntity {
     @OnDelete(action = OnDeleteAction.CASCADE)
     private Lesson lesson;
 
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "participant_id")
+    @OnDelete(action = OnDeleteAction.CASCADE)
+    private Participant participant;
 
 }

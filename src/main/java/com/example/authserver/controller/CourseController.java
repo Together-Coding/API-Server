@@ -26,4 +26,6 @@ public class CourseController {
                 courseDTO.getParticipants()
         );
     }
+
+
 }

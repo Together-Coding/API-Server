@@ -10,8 +10,8 @@ import org.hibernate.annotations.OnDeleteAction;
 
 import javax.persistence.*;
 
+
 @Entity
-@Builder
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Table(name = "participants",
@@ -27,16 +27,30 @@ public class Participant extends AuditingCreateEntity {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "course_id")
-    @OnDelete(action = OnDeleteAction.CASCADE)
+//    @OnDelete(action = OnDeleteAction.CASCADE)
     private Course course;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id")
-    @OnDelete(action = OnDeleteAction.CASCADE)
+//    @OnDelete(action = OnDeleteAction.CASCADE)
     private User user;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "lesson_id")
+    private Lesson lesson;
 
     @Column(length = 15, nullable = false)
     @Enumerated(EnumType.STRING)
     private Role role = Role.STUDENT;
 
+    @Builder
+    private Participant(Course course, Lesson lesson, User user, Role role){
+        this.course = course;
+        this.lesson = lesson;
+        this.user = user;
+        this.role = role;
+    }
 }
+
+
+

@@ -37,6 +37,7 @@ public class UserServiceImpl implements UserService{
         userRepository.save(user);
     }
 
+    @Override
     @Transactional
     public void updateUser(Long userId, String name){
         User user = this.getUser(userId);

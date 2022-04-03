@@ -24,11 +24,7 @@ public class Lesson extends AuditingCreateEntity {
 
     private String description;
 
-    private boolean active;
-
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "participant_id")
-    private Participant participant;
+    private int active;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "course_id")
