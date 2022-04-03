@@ -1,6 +1,5 @@
 package com.example.authserver.service;
 
-import com.example.authserver.domain.Course;
 import com.example.authserver.domain.Participant;
 import com.example.authserver.domain.Role;
 import com.example.authserver.domain.User;

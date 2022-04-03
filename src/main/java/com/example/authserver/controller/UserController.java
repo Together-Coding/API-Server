@@ -17,7 +17,7 @@ public class UserController {
 
     private final UserService userService;
 
-    @PostMapping("/signup")
+    @PostMapping("/user")
     public void registerUser(@RequestBody @Valid UserDTO.Signup request){
 
         userService.signup(

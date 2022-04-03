@@ -51,7 +51,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
     private final String[] excludePaths =
             new String[]{
-                    "/auth/signup", "/auth/signin", "/h2-console/**", "/"};
+                    "/auth/user", "/auth/login", "/h2-console/**", "/"};
 
     @Bean
     public ApiCheckFilter apiCheckFilter() {
@@ -62,7 +62,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     @Bean
     public ApiLoginFilter apiLoginFilter() throws Exception {
         ApiLoginFilter apiLoginFilter = new ApiLoginFilter
-                ("/auth/signin", jwtUtil());
+                ("/auth/login", jwtUtil());
         apiLoginFilter.setAuthenticationManager(authenticationManager());
         apiLoginFilter.setAuthenticationFailureHandler(new LoginFailHandler());
 
