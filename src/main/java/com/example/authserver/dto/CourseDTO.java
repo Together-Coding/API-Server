@@ -3,6 +3,8 @@ package com.example.authserver.dto;
 import lombok.Builder;
 import lombok.Getter;
 
+import java.util.List;
+
 
 public class CourseDTO {
 
@@ -29,5 +31,18 @@ public class CourseDTO {
         private String name;
 
         private String description;
+    }
+
+    @Getter
+    @Builder
+    public static class CourseWithParticipants {
+
+        private Long courseId;
+
+        private String name;
+
+        private String description;
+
+        private List<ParticipantDTO> participants;
     }
 }

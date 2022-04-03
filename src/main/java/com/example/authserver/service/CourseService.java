@@ -15,4 +15,6 @@ public interface CourseService {
     List<CourseDTO.Response> getCoursesWhereIamTeacher(Long userId);
 
     List<CourseDTO.Response> getCoursesWhereIamStudent(Long userId);
+
+    CourseDTO.CourseWithParticipants getCourseData(Long courseId);
 }

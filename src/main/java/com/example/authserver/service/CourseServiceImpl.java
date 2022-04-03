@@ -5,6 +5,7 @@ import com.example.authserver.domain.Participant;
 import com.example.authserver.domain.Role;
 import com.example.authserver.domain.User;
 import com.example.authserver.dto.CourseDTO;
+import com.example.authserver.dto.ParticipantDTO;
 import com.example.authserver.repository.CourseRepository;
 import com.example.authserver.repository.ParticipantRepository;
 import lombok.RequiredArgsConstructor;
@@ -114,6 +115,20 @@ public class CourseServiceImpl implements CourseService {
     public List<CourseDTO.Response> getCoursesWhereIamTeacher(Long userId) {
         List<Participant> participants = participantService.getCoursesThatIamTeacherByUserId(userId);
         return getCourseResp(participants);
+    }
+
+    @Override
+    @Transactional
+    public CourseDTO.CourseWithParticipants getCourseData(Long courseId) {
+        List<ParticipantDTO> participants = participantService.getParticipantList(courseId);
+        Course course = courseRepository.findById(courseId)
+                .orElseThrow(() -> new EntityNotFoundException("can not find course. input courseId: " + courseId));
+        return CourseDTO.CourseWithParticipants.builder()
+                .courseId(course.getId())
+                .name(course.getName())
+                .description(course.getDescription())
+                .participants(participants)
+                .build();
     }
 
     private List<CourseDTO.Response> getCourseResp(List<Participant> participants) {

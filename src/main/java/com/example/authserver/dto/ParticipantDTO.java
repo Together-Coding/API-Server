@@ -8,7 +8,7 @@ import lombok.*;
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 public class ParticipantDTO {
 
-    Long id;
+    Long userId;
 
     String email;
 

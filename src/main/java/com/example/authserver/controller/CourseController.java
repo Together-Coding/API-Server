@@ -38,5 +38,10 @@ public class CourseController {
         return courseService.getCoursesWhereIamTeacher(authUser.getId());
     }
 
+    @GetMapping("/{courseId}")
+    public CourseDTO.CourseWithParticipants getCourseWithParticipants(@PathVariable("courseId") Long courseId){
+        return courseService.getCourseData(courseId);
+    }
+
 
 }

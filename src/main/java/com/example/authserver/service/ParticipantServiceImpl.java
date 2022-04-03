@@ -31,7 +31,7 @@ public class ParticipantServiceImpl implements ParticipantService {
         for (Participant part : participants) {
             User user = part.getUser();
             dto.add(ParticipantDTO.builder()
-                    .id(user.getId())
+                    .userId(user.getId())
                     .email(user.getEmail())
                     .name(user.getName())
                     .build());
