@@ -1,12 +1,11 @@
 package com.example.authserver.controller;
 
 import com.example.authserver.dto.UserDTO;
+import com.example.authserver.security.dto.JwtDTO;
+import com.example.authserver.security.util.JWTUtil;
 import com.example.authserver.service.UserService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 
@@ -16,14 +15,28 @@ import javax.validation.Valid;
 public class UserController {
 
     private final UserService userService;
+    private final JWTUtil jwtUtil;
 
     @PostMapping("/user")
-    public void registerUser(@RequestBody @Valid UserDTO.Signup request){
+    public void registerUser(@RequestBody @Valid UserDTO.Signup request) {
 
         userService.signup(
                 request.getEmail(),
                 request.getPassword(),
                 request.getName()
         );
+    }
+
+    @GetMapping("/token")
+    public JwtDTO validateToken(@RequestParam("jwt") String jwt) throws Exception {
+        JwtDTO jwtDTO = jwtUtil.validateAndExtract(jwt);
+        if (jwtDTO != null) {
+            String email = jwtDTO.getEmail();
+            Long userId = userService.getUserByEmail(email).getId();
+            jwtDTO.updateUserId(userId);
+        } else{
+            throw new RuntimeException("토큰 에러");
+        }
+        return jwtDTO;
     }
 }

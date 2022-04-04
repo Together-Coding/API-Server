@@ -1,5 +1,6 @@
 package com.example.authserver.security.util;
 
+import com.example.authserver.security.dto.JwtDTO;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import io.jsonwebtoken.impl.DefaultClaims;
@@ -29,9 +30,8 @@ public class JWTUtil {
                 .compact();
     }
 
-    public String validateAndExtract(String tokenStr) throws Exception {
-
-        String contentValue = null;
+    public JwtDTO validateAndExtract(String tokenStr) throws Exception {
+        JwtDTO jwtDTO = null;
 
         try {
             DefaultJws defaultJws = (DefaultJws) Jwts.parser()
@@ -44,14 +44,19 @@ public class JWTUtil {
 
             log.info("--------------------------------");
 
-            contentValue = claims.getSubject();
+            jwtDTO = JwtDTO.builder()
+                    .isValid(true)
+                    .email(claims.getSubject())
+                    .issuedAt(claims.getIssuedAt())
+                    .expiredAt(claims.getExpiration())
+                    .build();
 
         } catch (Exception e) {
             e.printStackTrace();
             log.error(e.getMessage());
-            contentValue = null;
+            jwtDTO = null;
         }
-        return contentValue;
+        return jwtDTO;
     }
 }
 

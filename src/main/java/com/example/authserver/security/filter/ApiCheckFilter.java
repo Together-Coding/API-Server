@@ -102,7 +102,7 @@ public class ApiCheckFilter extends OncePerRequestFilter {
 
             String tokenWithoutBearer = authHeader.substring(7);
             try {
-                email = jwtUtil.validateAndExtract(tokenWithoutBearer);
+                email = jwtUtil.validateAndExtract(tokenWithoutBearer).getEmail();
                 log.info("validate result: " + email);
                 return email;
             } catch (Exception e) {

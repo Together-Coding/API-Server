@@ -51,7 +51,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
     private final String[] excludePaths =
             new String[]{
-                    "/auth/user", "/auth/login", "/h2-console/**", "/"};
+                    "/auth/user", "/auth/login", "/auth/token", "/h2-console/**", "/"};
 
     @Bean
     public ApiCheckFilter apiCheckFilter() {

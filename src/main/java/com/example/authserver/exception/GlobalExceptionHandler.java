@@ -1,5 +1,6 @@
 package com.example.authserver.exception;
 
+import io.jsonwebtoken.SignatureException;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -23,5 +24,11 @@ public class GlobalExceptionHandler {
         ex.printStackTrace();
         ValidExceptionDTO dto = ValidExceptionDTO.toDto(ex);
         return new ResponseEntity<>(dto, HttpStatus.BAD_REQUEST);
+    }
+
+    @ExceptionHandler({SignatureException.class})
+    public ResponseEntity<String> forbiddenHandler(SignatureException ex){
+        String message = ex.getMessage();
+        return new ResponseEntity<>(message, HttpStatus.FORBIDDEN);
     }
 }
