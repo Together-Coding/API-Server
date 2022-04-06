@@ -6,6 +6,8 @@ import com.example.authserver.domain.Role;
 import com.example.authserver.domain.User;
 import com.example.authserver.dto.CourseDTO;
 import com.example.authserver.dto.ParticipantDTO;
+import com.example.authserver.exception.custom.ForbiddenException;
+import com.example.authserver.exception.custom.NotFoundException;
 import com.example.authserver.repository.CourseRepository;
 import com.example.authserver.repository.ParticipantRepository;
 import lombok.RequiredArgsConstructor;
@@ -14,7 +16,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import javax.persistence.EntityNotFoundException;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -77,7 +79,7 @@ public class CourseServiceImpl implements CourseService {
     public Long addUser(String teacherEmail, String email, Long courseId) {
         List<Participant> teachers = participantRepository.getAllByCourse_IdAndRole(courseId, Role.TEACHER);
         Course course = courseRepository.findById(courseId)
-                .orElseThrow(() -> new EntityNotFoundException("can not find course. input courseId: " + courseId));
+                .orElseThrow(() -> new NotFoundException("can not find course. input courseId: " + courseId));
         User user = userService.getUserByEmail(email);
         // TODO : 여기 뭔가 이상한데...
         for (Participant teacher : teachers) {
@@ -91,7 +93,7 @@ public class CourseServiceImpl implements CourseService {
                 participantRepository.save(student);
                 return student.getId();
             } else {
-                throw new RuntimeException("권한이 없습니다.");
+                throw new ForbiddenException("권한이 없습니다.");
             }
         }
         return null;
@@ -122,7 +124,7 @@ public class CourseServiceImpl implements CourseService {
     public CourseDTO.CourseWithParticipants getCourseData(Long courseId) {
         List<ParticipantDTO> participants = participantService.getParticipantList(courseId);
         Course course = courseRepository.findById(courseId)
-                .orElseThrow(() -> new EntityNotFoundException("can not find course. input courseId: " + courseId));
+                .orElseThrow(() -> new NotFoundException("can not find course. input courseId: " + courseId));
         return CourseDTO.CourseWithParticipants.builder()
                 .courseId(course.getId())
                 .name(course.getName())

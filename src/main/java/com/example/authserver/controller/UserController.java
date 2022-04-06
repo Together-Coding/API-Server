@@ -4,6 +4,7 @@ import com.example.authserver.dto.UserDTO;
 import com.example.authserver.security.dto.JwtDTO;
 import com.example.authserver.security.util.JWTUtil;
 import com.example.authserver.service.UserService;
+import io.jsonwebtoken.SignatureException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
@@ -37,7 +38,7 @@ public class UserController {
             Long userId = userService.getUserByEmail(email).getId();
             jwtDTO.updateUserId(userId);
         } else{
-            throw new RuntimeException("토큰 에러");
+            throw new SignatureException("토큰 에러");
         }
         return jwtDTO;
     }

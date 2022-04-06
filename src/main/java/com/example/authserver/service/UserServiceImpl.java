@@ -2,6 +2,8 @@ package com.example.authserver.service;
 
 import com.example.authserver.domain.User;
 import com.example.authserver.domain.UserRole;
+import com.example.authserver.exception.custom.AlreadyExistsException;
+import com.example.authserver.exception.custom.NotFoundException;
 import com.example.authserver.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
@@ -9,7 +11,6 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import javax.persistence.EntityNotFoundException;
 
 @Log4j2
 @Service
@@ -24,7 +25,7 @@ public class UserServiceImpl implements UserService{
     public void signup(String email, String password, String name){
         if (userRepository.existsByEmail(email)) {
             log.warn("Email already exists input: {}", email);
-            throw new IllegalArgumentException("Email already exists input: " + email);
+            throw new AlreadyExistsException("Email already exists input: " + email);
         }
         User user = User.builder()
                 .email(email)
@@ -48,14 +49,14 @@ public class UserServiceImpl implements UserService{
     @Transactional
     public User getUser(Long userId){
         return userRepository.findById(userId)
-                .orElseThrow(() -> new EntityNotFoundException("can not find user. input userId: " + userId));
+                .orElseThrow(() -> new NotFoundException("can not find user. input userId: " + userId));
     }
 
     @Override
     @Transactional
     public User getUserByEmail(String email){
         return userRepository.findByEmail(email)
-                .orElseThrow(() -> new EntityNotFoundException("can not find user. input email: " + email));
+                .orElseThrow(() -> new NotFoundException("can not find user. input email: " + email));
     }
 
 }
