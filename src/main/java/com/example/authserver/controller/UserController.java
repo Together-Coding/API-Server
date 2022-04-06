@@ -8,6 +8,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.util.Map;
 
 @RequestMapping("/auth")
 @RestController
@@ -27,8 +28,9 @@ public class UserController {
         );
     }
 
-    @GetMapping("/token")
-    public JwtDTO validateToken(@RequestParam("jwt") String jwt) throws Exception {
+    @PostMapping("/token")
+    public JwtDTO validateToken(@RequestBody Map<String, String> token) throws Exception {
+        String jwt = token.get("token");
         JwtDTO jwtDTO = jwtUtil.validateAndExtract(jwt);
         if (jwtDTO != null) {
             String email = jwtDTO.getEmail();
