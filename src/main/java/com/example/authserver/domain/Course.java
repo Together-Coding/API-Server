@@ -25,6 +25,10 @@ public class Course extends AuditingCreateUpdateEntity {
 
     private String password;
 
+    @OneToOne
+    @JoinColumn(name = "course_id")
+    private User user;
+
     // boolean 생각 점
     @Transient
     private int accessible;
