@@ -44,4 +44,8 @@ public class Course extends AuditingCreateUpdateEntity {
         this.accessible = accessible;
         this.active = active;
     }
+
+    public void updatePw(String password){
+        this.password = password;
+    }
 }

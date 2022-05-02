@@ -3,6 +3,7 @@ package com.example.authserver.domain;
 
 import com.example.authserver.domain.base.AuditingCreateEntity;
 import lombok.AccessLevel;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.OnDelete;
@@ -30,4 +31,16 @@ public class Lesson extends AuditingCreateEntity {
     @JoinColumn(name = "course_id")
     @OnDelete(action = OnDeleteAction.CASCADE)
     private Course course;
+
+    @Builder
+    private Lesson(String name, String description, Course course) {
+        this.name = name;
+        this.description = description;
+        this.course = course;
+    }
+
+    public void update(String name, String description){
+        this.name = name;
+        this.description = description;
+    }
 }

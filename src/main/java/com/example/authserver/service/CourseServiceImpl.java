@@ -101,6 +101,16 @@ public class CourseServiceImpl implements CourseService {
 
     @Override
     @Transactional
+    public void changePw(Long courseId, String newPw) {
+        Course course = courseRepository.findById(courseId)
+                .orElseThrow(() -> new NotFoundException("can not find course. input courseId: " + courseId));
+
+        String enPw = passwordEncoder.encode(newPw);
+        course.updatePw(enPw);
+    }
+
+    @Override
+    @Transactional
     public void delete(Long courseId) {
         courseRepository.deleteById(courseId);
     }

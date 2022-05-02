@@ -12,6 +12,8 @@ public interface CourseService {
 
     void delete(Long courseId);
 
+    void changePw(Long courseId, String newPw);
+
     List<CourseDTO.Response> getCoursesWhereIamTeacher(Long userId);
 
     List<CourseDTO.Response> getCoursesWhereIamStudent(Long userId);
