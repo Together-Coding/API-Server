@@ -1,15 +1,16 @@
 package com.example.authserver.controller;
 
 import com.example.authserver.dto.UserDTO;
-import com.example.authserver.security.dto.JwtDTO;
-import com.example.authserver.security.util.JWTUtil;
+import com.example.authserver.security.dto.AuthUserDTO;
 import com.example.authserver.service.UserService;
-import io.jsonwebtoken.SignatureException;
 import lombok.RequiredArgsConstructor;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 import javax.validation.Valid;
-import java.util.Map;
+
 
 @RequestMapping("/auth")
 @RestController
@@ -17,29 +18,26 @@ import java.util.Map;
 public class UserController {
 
     private final UserService userService;
-    private final JWTUtil jwtUtil;
 
-    @PostMapping("/user")
-    public void registerUser(@RequestBody @Valid UserDTO.Signup request) {
+    @PutMapping
+    public void updateUser(@AuthenticationPrincipal AuthUserDTO authUser,
+                           @Valid UserDTO.Update updateDTO) {
 
-        userService.signup(
-                request.getEmail(),
-                request.getPassword(),
-                request.getName()
+        userService.updateUser(
+                authUser.getId(),
+                authUser.getName()
         );
     }
 
-    @PostMapping("/token")
-    public JwtDTO validateToken(@RequestBody Map<String, String> token) throws Exception {
-        String jwt = token.get("token");
-        JwtDTO jwtDTO = jwtUtil.validateAndExtract(jwt);
-        if (jwtDTO != null) {
-            String email = jwtDTO.getEmail();
-            Long userId = userService.getUserByEmail(email).getId();
-            jwtDTO.updateUserId(userId);
-        } else{
-            throw new SignatureException("토큰 에러");
-        }
-        return jwtDTO;
+    @PutMapping("/api/user/password")
+    public void changePassword(@AuthenticationPrincipal AuthUserDTO authUser,
+                               @Valid UserDTO.Password passwordDTO) {
+
+        userService.updatePassword(
+                authUser.getId(),
+                passwordDTO.getCurrentPassword(),
+                passwordDTO.getNewPassword(),
+                passwordDTO.getCheckPassword()
+        );
     }
 }

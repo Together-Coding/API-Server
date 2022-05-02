@@ -39,9 +39,26 @@ public class CourseController {
     }
 
     @GetMapping("/{courseId}")
-    public CourseDTO.CourseWithParticipants getCourseWithParticipants(@PathVariable("courseId") Long courseId){
+    public CourseDTO.CourseWithParticipants getCourseWithParticipants(@PathVariable("courseId") Long courseId) {
         return courseService.getCourseData(courseId);
     }
 
+    @DeleteMapping("/{courseId}")
+    public void deleteCourse(@AuthenticationPrincipal AuthUserDTO authUser,
+                             @PathVariable Long courseId) {
+        courseService.delete(
+                courseId,
+                authUser.getId());
+    }
+
+    @PostMapping("/student")
+    public void registerNewStudent(@AuthenticationPrincipal AuthUserDTO authUser,
+                                   String email,
+                                   Long courseId) {
+        courseService.addUser(
+                authUser.getId(),
+                email,
+                courseId);
+    }
 
 }

@@ -1,6 +1,7 @@
 package com.example.authserver.domain;
 
 import com.example.authserver.domain.base.AuditingCreateUpdateEntity;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
@@ -23,10 +24,11 @@ public class Course extends AuditingCreateUpdateEntity {
 
     private String description;
 
+    @JsonIgnore
     private String password;
 
     @OneToOne
-    @JoinColumn(name = "course_id")
+    @JoinColumn(name = "teacher_id")
     private User user;
 
     // boolean 생각 점
@@ -37,8 +39,9 @@ public class Course extends AuditingCreateUpdateEntity {
     private int active;
 
     @Builder
-    private Course(String name, String description ,String password, int accessible, int active){
+    private Course(String name, User user, String description ,String password, int accessible, int active){
         this.name = name;
+        this.user = user;
         this.description = description;
         this.password = password;
         this.accessible = accessible;

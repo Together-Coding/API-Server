@@ -11,4 +11,6 @@ public interface UserService {
     User getUserByEmail(String email);
 
     void updateUser(Long userId, String name);
+
+    void updatePassword(Long userId, String oldPw, String newPw, String checkPw);
 }

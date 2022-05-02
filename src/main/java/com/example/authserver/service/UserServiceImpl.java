@@ -3,6 +3,7 @@ package com.example.authserver.service;
 import com.example.authserver.domain.User;
 import com.example.authserver.domain.UserRole;
 import com.example.authserver.exception.custom.AlreadyExistsException;
+import com.example.authserver.exception.custom.InvalidArgsException;
 import com.example.authserver.exception.custom.NotFoundException;
 import com.example.authserver.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
@@ -43,6 +44,26 @@ public class UserServiceImpl implements UserService{
     public void updateUser(Long userId, String name){
         User user = this.getUser(userId);
         user.updateName(name);
+    }
+
+    @Override
+    @Transactional
+    public void updatePassword(Long userId, String oldPw, String newPw, String checkPw) {
+        User user = this.getUser(userId);
+
+        if (!passwordEncoder.matches(oldPw, user.getPassword())) {
+            log.warn("이전 비밀번호와 다릅니다.");
+            throw new InvalidArgsException("이전 비밀번호와 다릅니다.");
+        }
+
+        if (!newPw.equals(checkPw)) {
+            log.warn("확인 비밀번호가 새 비밀번호와 다릅니다.");
+            throw new InvalidArgsException("확인 비밀번호가 새 비밀번호와 다릅니다.");
+        }
+
+        user.updatePassword(passwordEncoder.encode(newPw));
+
+        userRepository.save(user);
     }
 
     @Override

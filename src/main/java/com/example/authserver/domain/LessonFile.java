@@ -21,7 +21,7 @@ public class LessonFile extends AuditingCreateEntity {
 
     private String url;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "lesson_id")
     @OnDelete(action = OnDeleteAction.CASCADE)
     private Lesson lesson;

@@ -1,6 +1,7 @@
 package com.example.authserver.controller;
 
 
+import com.example.authserver.domain.Lesson;
 import com.example.authserver.dto.LessonDTO;
 import com.example.authserver.security.dto.AuthUserDTO;
 import com.example.authserver.service.LessonService;
@@ -8,13 +9,21 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RequestMapping("/api/lesson")
 @RestController
 @RequiredArgsConstructor
 public class LessonController {
 
-    private LessonService lessonService;
+    private final LessonService lessonService;
 
+    @GetMapping("/{courseId}")
+    public List<Lesson> getLessons(@PathVariable Long courseId) {
+        return lessonService.getLessons(courseId);
+    }
+
+    // TODO: validation check!!!
     @PostMapping
     public void registerLesson(LessonDTO lessonDTO, Long courseId, @AuthenticationPrincipal AuthUserDTO authUser) {
 
@@ -37,7 +46,7 @@ public class LessonController {
         );
     }
 
-    @PutMapping("/name/{lessonId}")
+    @PutMapping("/description/{lessonId}")
     public void updateDescription(@AuthenticationPrincipal AuthUserDTO authUser,
                                   @PathVariable Long lessonId,
                                   String description) {
@@ -50,7 +59,8 @@ public class LessonController {
     }
 
     @DeleteMapping("/{lessonId}")
-    public void deleteLesson(@AuthenticationPrincipal AuthUserDTO authUser, Long lessonId) {
+    public void deleteLesson(@AuthenticationPrincipal AuthUserDTO authUser,
+                             @PathVariable Long lessonId) {
 
         lessonService.delete(lessonId, authUser.getId());
     }
