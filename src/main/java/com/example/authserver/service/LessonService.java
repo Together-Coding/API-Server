@@ -2,9 +2,11 @@ package com.example.authserver.service;
 
 public interface LessonService {
 
-    void register(String name, String description, Long courseId);
+    void register(String name, String description, Long courseId, Long userId);
 
-    void update(Long id, String name, String description);
+    void updateName(Long lessonId, Long userId, String name);
+
+    void updateDescription(Long lessonId, Long userId, String description);
 
     void delete(Long id, Long userId);
 }

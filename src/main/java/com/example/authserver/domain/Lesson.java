@@ -39,8 +39,12 @@ public class Lesson extends AuditingCreateEntity {
         this.course = course;
     }
 
-    public void update(String name, String description){
+    public void updateName(String name){
         this.name = name;
+    }
+
+    public void updateDescription(String description){
         this.description = description;
     }
+
 }

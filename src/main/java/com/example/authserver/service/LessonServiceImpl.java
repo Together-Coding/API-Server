@@ -22,9 +22,15 @@ public class LessonServiceImpl implements LessonService {
 
 
     @Transactional
-    public void register(String name, String description, Long courseId) {
+    public void register(String name, String description, Long courseId, Long userId) {
         Course course = courseRepository.findById(courseId)
                 .orElseThrow(() -> new NotFoundException("can not find course. input courseId: " + courseId));
+
+        Long teacherId = course.getUser().getId();
+
+        if (!teacherId.equals(userId)) {
+            throw new ForbiddenException("생성권한이 없습니다.");
+        }
 
         Lesson lesson = Lesson.builder()
                 .name(name)
@@ -36,22 +42,42 @@ public class LessonServiceImpl implements LessonService {
     }
 
     @Transactional
-    public void update(Long id, String name, String description) {
-        Lesson lesson = lessonRepository.findById(id)
-                .orElseThrow(() -> new NotFoundException("can not find lesson. input lessonId: " + id));
+    public void updateName(Long lessonId, Long userId, String name) {
+        Lesson lesson = lessonRepository.findById(lessonId)
+                .orElseThrow(() -> new NotFoundException("can not find lesson. input lessonId: " + lessonId));
 
-        lesson.update(name, description);
+        Long ownerId = lesson.getCourse().getUser().getId();
+
+        if (!ownerId.equals(userId)) {
+            throw new ForbiddenException("수정권한이 없습니다.");
+        }
+
+        lesson.updateName(name);
     }
 
     @Transactional
-    public void delete(Long id, Long userId){
+    public void updateDescription(Long lessonId, Long userId, String description) {
+        Lesson lesson = lessonRepository.findById(lessonId)
+                .orElseThrow(() -> new NotFoundException("can not find lesson. input lessonId: " + lessonId));
+
+        Long ownerId = lesson.getCourse().getUser().getId();
+
+        if (!ownerId.equals(userId)) {
+            throw new ForbiddenException("수정권한이 없습니다.");
+        }
+
+        lesson.updateDescription(description);
+    }
+
+    @Transactional
+    public void delete(Long id, Long userId) {
         Lesson lesson = lessonRepository.findById(id)
                 .orElseThrow(() -> new NotFoundException("can not find lesson. input lessonId: " + id));
 
         Long ownerId = lesson.getCourse().getUser().getId();
 
-        if (!ownerId.equals(userId)){
-            throw new ForbiddenException("삭제할 권한이 없습니다.");
+        if (!ownerId.equals(userId)) {
+            throw new ForbiddenException("삭제권한이 없습니다.");
         }
 
         lessonRepository.delete(lesson);
