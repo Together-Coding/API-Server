@@ -31,21 +31,18 @@ public class Course extends AuditingCreateUpdateEntity {
     @JoinColumn(name = "teacher_id")
     private User user;
 
-    // boolean 생각 점
-    @Transient
     private int accessible;
 
-    @Transient
     private int active;
 
     @Builder
-    private Course(String name, User user, String description ,String password, int accessible, int active){
+    private Course(String name, User user, String description ,String password){
         this.name = name;
         this.user = user;
         this.description = description;
         this.password = password;
-        this.accessible = accessible;
-        this.active = active;
+        this.accessible = 1;
+        this.active = 1;
     }
 
     public void updatePw(String password){

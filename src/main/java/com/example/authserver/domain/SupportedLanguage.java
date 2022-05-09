@@ -1,22 +1,24 @@
 package com.example.authserver.domain;
 
+
 import com.example.authserver.domain.base.AuditingCreateEntity;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
-import javax.persistence.*;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.Table;
 
 @Entity
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-@Table(name = "files")
-public class LessonFile extends AuditingCreateEntity {
+@Table(name="supported_languages")
+public class SupportedLanguage extends AuditingCreateEntity {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    String name;
 
-    private String url;
+    Long order;
 
 }

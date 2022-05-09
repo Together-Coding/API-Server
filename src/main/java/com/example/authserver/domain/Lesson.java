@@ -32,6 +32,11 @@ public class Lesson extends AuditingCreateEntity {
     @OnDelete(action = OnDeleteAction.CASCADE)
     private Course course;
 
+    @OneToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "lesson_File_id")
+    @OnDelete(action = OnDeleteAction.CASCADE)
+    private LessonFile lessonFile;
+
     @Builder
     private Lesson(String name, String description, Course course) {
         this.name = name;

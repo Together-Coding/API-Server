@@ -1,22 +1,24 @@
 package com.example.authserver.domain;
 
+
 import com.example.authserver.domain.base.AuditingCreateEntity;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
-import javax.persistence.*;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
 
 @Entity
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-@Table(name = "files")
-public class LessonFile extends AuditingCreateEntity {
+public class ProjectViewer extends AuditingCreateEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private String url;
-
+    private Long project;
 }

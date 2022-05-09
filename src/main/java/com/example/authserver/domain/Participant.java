@@ -25,6 +25,8 @@ public class Participant extends AuditingCreateEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    private String nickname;
+
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "course_id")
     @OnDelete(action = OnDeleteAction.CASCADE)
@@ -35,18 +37,13 @@ public class Participant extends AuditingCreateEntity {
     @OnDelete(action = OnDeleteAction.CASCADE)
     private User user;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "lesson_id")
-    private Lesson lesson;
-
     @Column(length = 15, nullable = false)
     @Enumerated(EnumType.STRING)
-    private Role role = Role.STUDENT;
+    private ParticipantRole role = ParticipantRole.STUDENT;
 
     @Builder
-    private Participant(Course course, Lesson lesson, User user, Role role){
+    private Participant(Course course, Lesson lesson, User user, ParticipantRole role){
         this.course = course;
-        this.lesson = lesson;
         this.user = user;
         this.role = role;
     }

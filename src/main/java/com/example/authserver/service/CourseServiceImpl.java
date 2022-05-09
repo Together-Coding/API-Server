@@ -42,8 +42,6 @@ public class CourseServiceImpl implements CourseService {
                 .password(enPw)
                 .user(owner)
                 .description(description)
-                .accessible(0)
-                .active(0)
                 .build();
 
         courseRepository.save(course);
@@ -52,7 +50,7 @@ public class CourseServiceImpl implements CourseService {
         Participant teacher = Participant.builder()
                 .course(course)
                 .user(owner)
-                .role(Role.TEACHER)
+                .role(ParticipantRole.TEACHER)
                 .build();
 
         participantRepository.save(teacher);
@@ -63,7 +61,7 @@ public class CourseServiceImpl implements CourseService {
             Participant student = Participant.builder()
                     .course(course)
                     .user(user)
-                    .role(Role.STUDENT)
+                    .role(ParticipantRole.STUDENT)
                     .build();
 
             participantRepository.save(student);
@@ -86,7 +84,7 @@ public class CourseServiceImpl implements CourseService {
         Participant student = Participant.builder()
                 .course(course)
                 .user(user)
-                .role(Role.STUDENT)
+                .role(ParticipantRole.STUDENT)
                 .build();
 
         participantRepository.save(student);

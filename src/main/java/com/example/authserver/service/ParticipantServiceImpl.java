@@ -1,7 +1,7 @@
 package com.example.authserver.service;
 
 import com.example.authserver.domain.Participant;
-import com.example.authserver.domain.Role;
+import com.example.authserver.domain.ParticipantRole;
 import com.example.authserver.domain.User;
 import com.example.authserver.dto.ParticipantDTO;
 import com.example.authserver.repository.ParticipantRepository;
@@ -42,13 +42,13 @@ public class ParticipantServiceImpl implements ParticipantService {
     @Override
     @Transactional(readOnly = true)
     public List<Participant> getCoursesThatIamStudentByUserId(Long userId){
-        return participantRepository.getParticipantsByUser_IdAndRoleOrderByIdDesc(userId, Role.STUDENT);
+        return participantRepository.getParticipantsByUser_IdAndRoleOrderByIdDesc(userId, ParticipantRole.STUDENT);
     }
 
     @Override
     @Transactional(readOnly = true)
     public List<Participant> getCoursesThatIamTeacherByUserId(Long userId){
-        return participantRepository.getParticipantsByUser_IdAndRoleOrderByIdDesc(userId, Role.TEACHER);
+        return participantRepository.getParticipantsByUser_IdAndRoleOrderByIdDesc(userId, ParticipantRole.TEACHER);
     }
 
 
