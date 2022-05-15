@@ -22,9 +22,7 @@ public class CourseController {
         courseService.register(
                 courseDTO.getName(),
                 courseDTO.getPassword(),
-                courseDTO.getTeacherName(),
-                courseDTO.getDescription(),
-                courseDTO.getParticipants()
+                courseDTO.getDescription()
         );
     }
 
@@ -53,11 +51,11 @@ public class CourseController {
 
     @PostMapping("/student")
     public void registerNewStudent(@AuthenticationPrincipal AuthUserDTO authUser,
-                                   String email,
+                                   String[] emails,
                                    Long courseId) {
         courseService.addUser(
                 authUser.getId(),
-                email,
+                emails,
                 courseId);
     }
 

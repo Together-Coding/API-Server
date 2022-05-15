@@ -32,62 +32,52 @@ public class CourseServiceImpl implements CourseService {
 
     @Override
     @Transactional
-    public Long register(String name, String password, String teacherEmail, String description, String[] emails) {
+    public Long register(String name, String password, String description) {
         String enPw = passwordEncoder.encode(password);
-
-        User owner = userService.getUserByEmail(teacherEmail);
 
         Course course = Course.builder()
                 .name(name)
                 .password(enPw)
-                .user(owner)
                 .description(description)
                 .build();
 
         courseRepository.save(course);
-
-
-        Participant teacher = Participant.builder()
-                .course(course)
-                .user(owner)
-                .role(ParticipantRole.TEACHER)
-                .build();
-
-        participantRepository.save(teacher);
-
-        for (String email : emails) {
-            User user = userService.getUserByEmail(email);
-
-            Participant student = Participant.builder()
-                    .course(course)
-                    .user(user)
-                    .role(ParticipantRole.STUDENT)
-                    .build();
-
-            participantRepository.save(student);
-        }
-
         return course.getId();
     }
 
     @Override
     @Transactional
-    public void addUser(Long teacherId, String email, Long courseId) {
+    public void addUser(Long teacherId, String[] emails, Long courseId) {
         Course course = courseRepository.findById(courseId)
                 .orElseThrow(() -> new NotFoundException("can not find course. input courseId: " + courseId));
-        User user = userService.getUserByEmail(email);
 
         if (!course.getUser().getId().equals(teacherId)) {
             throw new ForbiddenException("권한이 없습니다.");
         }
 
-        Participant student = Participant.builder()
-                .course(course)
-                .user(user)
-                .role(ParticipantRole.STUDENT)
-                .build();
+        for (String email : emails) {
+            User user = userService.getUserByEmail(email);
+            Participant student = Participant.builder()
+                    .course(course)
+                    .user(user)
+                    .role(ParticipantRole.STUDENT)
+                    .build();
+            participantRepository.save(student);
+        }
+    }
 
-        participantRepository.save(student);
+    @Override
+    @Transactional
+    public void addTeacher(String teacherEmail, Long courseId) {
+        User user = userService.getUserByEmail(teacherEmail);
+        Course course = courseRepository.findById(courseId)
+                .orElseThrow(() -> new NotFoundException("can not find course. input courseId: " + courseId));
+        course.updateUser(user);
+        participantRepository.save(Participant.builder()
+                .user(user)
+                .course(course)
+                .role(ParticipantRole.TEACHER)
+                .build());
     }
 
     @Override
@@ -100,6 +90,31 @@ public class CourseServiceImpl implements CourseService {
         course.updatePw(enPw);
         courseRepository.save(course);
     }
+
+    @Override
+    @Transactional
+    public void updateAccessible(Long userId, Long courseId, int status) {
+        Participant participant = participantRepository.getParticipantByCourse_IdAndUser_Id(courseId, userId);
+        if (!participant.getRole().equals(ParticipantRole.TEACHER)) {
+            throw new ForbiddenException("권한이 없습니다.");
+        }
+        Course course = courseRepository.findById(courseId)
+                .orElseThrow(() -> new NotFoundException("can not find course. input courseId: " + courseId));
+        course.updateAccessible(status);
+    }
+
+    @Override
+    @Transactional
+    public void updateActive(Long userId, Long courseId, int status) {
+        Participant participant = participantRepository.getParticipantByCourse_IdAndUser_Id(courseId, userId);
+        if (!participant.getRole().equals(ParticipantRole.TEACHER)) {
+            throw new ForbiddenException("권한이 없습니다.");
+        }
+        Course course = courseRepository.findById(courseId)
+                .orElseThrow(() -> new NotFoundException("can not find course. input courseId: " + courseId));
+        course.updateActive(status);
+    }
+
 
     @Override
     @Transactional
@@ -119,14 +134,14 @@ public class CourseServiceImpl implements CourseService {
     @Transactional
     public List<CourseDTO.Response> getCoursesWhereIamStudent(Long userId) {
         List<Participant> participants = participantService.getCoursesThatIamStudentByUserId(userId);
-        return getCourseResp(participants);
+        return getCourseResp(participants, "student");
     }
 
     @Override
     @Transactional
     public List<CourseDTO.Response> getCoursesWhereIamTeacher(Long userId) {
         List<Participant> participants = participantService.getCoursesThatIamTeacherByUserId(userId);
-        return getCourseResp(participants);
+        return getCourseResp(participants, "teacher");
     }
 
     @Override
@@ -143,13 +158,14 @@ public class CourseServiceImpl implements CourseService {
                 .build();
     }
 
-    private List<CourseDTO.Response> getCourseResp(List<Participant> participants) {
+    private List<CourseDTO.Response> getCourseResp(List<Participant> participants, String role) {
         List<CourseDTO.Response> responses = new ArrayList<>();
         for (Participant participant : participants) {
             responses.add(CourseDTO.Response.builder()
                     .courseId(participant.getCourse().getId())
                     .name(participant.getCourse().getName())
                     .description(participant.getCourse().getDescription())
+                    .role(role)
                     .build());
         }
         return responses;

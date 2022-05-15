@@ -45,7 +45,13 @@ public class Course extends AuditingCreateUpdateEntity {
         this.active = 1;
     }
 
+    public void updateAccessible(int status){this.accessible = status;}
+
+    public void updateActive(int status){this.active = status;}
+
     public void updatePw(String password){
         this.password = password;
     }
+
+    public void updateUser(User user) {this.user = user;}
 }

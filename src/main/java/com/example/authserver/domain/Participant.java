@@ -42,7 +42,7 @@ public class Participant extends AuditingCreateEntity {
     private ParticipantRole role = ParticipantRole.STUDENT;
 
     @Builder
-    private Participant(Course course, Lesson lesson, User user, ParticipantRole role){
+    private Participant(Course course, User user, ParticipantRole role){
         this.course = course;
         this.user = user;
         this.role = role;

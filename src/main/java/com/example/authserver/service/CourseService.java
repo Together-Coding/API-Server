@@ -7,9 +7,15 @@ import java.util.List;
 
 public interface CourseService {
 
-    Long register(String name, String password, String teacherEmail, String description, String[] emails);
+    Long register(String name, String password, String description);
 
-    void addUser(Long teacherId, String email, Long courseId);
+    void addUser(Long teacherId, String[] email, Long courseId);
+
+    void updateAccessible(Long userId, Long courseId, int status);
+
+    void updateActive(Long userId, Long courseId, int status);
+
+    void addTeacher(String teacherEmail, Long courseId);
 
     void delete(Long courseId, Long userId);
 

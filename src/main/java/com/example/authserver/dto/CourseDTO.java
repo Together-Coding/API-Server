@@ -31,6 +31,8 @@ public class CourseDTO {
         private String name;
 
         private String description;
+
+        private String role;
     }
 
     @Getter
