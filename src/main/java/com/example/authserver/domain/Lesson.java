@@ -25,7 +25,7 @@ public class Lesson extends AuditingCreateEntity {
 
     private String description;
 
-    private int active;
+    private Integer active;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "course_id")
@@ -33,8 +33,7 @@ public class Lesson extends AuditingCreateEntity {
     private Course course;
 
     @OneToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "lesson_File_id")
-    @OnDelete(action = OnDeleteAction.CASCADE)
+    @JoinColumn(name = "lesson_file_id")
     private LessonFile lessonFile;
 
     @Builder

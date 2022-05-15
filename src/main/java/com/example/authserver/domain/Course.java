@@ -29,11 +29,8 @@ public class Course extends AuditingCreateUpdateEntity {
 
     @OneToOne
     @JoinColumn(name = "teacher_id")
+    @OnDelete(action = OnDeleteAction.CASCADE)
     private User user;
-
-    private int accessible;
-
-    private int active;
 
     @Builder
     private Course(String name, User user, String description ,String password){
@@ -41,13 +38,7 @@ public class Course extends AuditingCreateUpdateEntity {
         this.user = user;
         this.description = description;
         this.password = password;
-        this.accessible = 1;
-        this.active = 1;
     }
-
-    public void updateAccessible(int status){this.accessible = status;}
-
-    public void updateActive(int status){this.active = status;}
 
     public void updatePw(String password){
         this.password = password;

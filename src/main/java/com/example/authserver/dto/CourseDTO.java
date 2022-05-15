@@ -1,11 +1,17 @@
 package com.example.authserver.dto;
 
+import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 import java.util.List;
 
 
+@Builder
+@NoArgsConstructor
 public class CourseDTO {
 
     @Getter
@@ -20,6 +26,28 @@ public class CourseDTO {
         private String description;
 
         private String[] participants;
+    }
+
+    @Getter
+    @NoArgsConstructor
+    @AllArgsConstructor
+    public static class AddUser {
+
+        private List<String> emails;
+        private Long courseId;
+    }
+
+    @Getter
+    @Builder
+    @NoArgsConstructor
+    @AllArgsConstructor
+    public static class AddTeacher {
+
+        @NotBlank
+        private String teacherEmail;
+
+        @NotNull
+        private Long courseId;
     }
 
     @Getter

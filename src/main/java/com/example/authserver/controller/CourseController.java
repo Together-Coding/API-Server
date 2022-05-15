@@ -26,6 +26,15 @@ public class CourseController {
         );
     }
 
+    @PostMapping("/teacher")
+    public void addTeacher(@RequestBody @Valid CourseDTO.AddTeacher teacherDTO) {
+
+        courseService.addTeacher(
+                teacherDTO.getTeacherEmail(),
+                teacherDTO.getCourseId());
+    }
+
+
     @GetMapping("/student")
     public List<CourseDTO.Response> getStudentCourse(@AuthenticationPrincipal AuthUserDTO authUser) {
         return courseService.getCoursesWhereIamStudent(authUser.getId());
@@ -51,12 +60,11 @@ public class CourseController {
 
     @PostMapping("/student")
     public void registerNewStudent(@AuthenticationPrincipal AuthUserDTO authUser,
-                                   String[] emails,
-                                   Long courseId) {
+                                   @RequestBody CourseDTO.AddUser addUser) {
         courseService.addUser(
                 authUser.getId(),
-                emails,
-                courseId);
+                addUser.getEmails(),
+                addUser.getCourseId());
     }
 
 }

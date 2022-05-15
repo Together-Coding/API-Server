@@ -47,7 +47,7 @@ public class CourseServiceImpl implements CourseService {
 
     @Override
     @Transactional
-    public void addUser(Long teacherId, String[] emails, Long courseId) {
+    public void addUser(Long teacherId, List<String> emails, Long courseId) {
         Course course = courseRepository.findById(courseId)
                 .orElseThrow(() -> new NotFoundException("can not find course. input courseId: " + courseId));
 
@@ -91,29 +91,29 @@ public class CourseServiceImpl implements CourseService {
         courseRepository.save(course);
     }
 
-    @Override
-    @Transactional
-    public void updateAccessible(Long userId, Long courseId, int status) {
-        Participant participant = participantRepository.getParticipantByCourse_IdAndUser_Id(courseId, userId);
-        if (!participant.getRole().equals(ParticipantRole.TEACHER)) {
-            throw new ForbiddenException("권한이 없습니다.");
-        }
-        Course course = courseRepository.findById(courseId)
-                .orElseThrow(() -> new NotFoundException("can not find course. input courseId: " + courseId));
-        course.updateAccessible(status);
-    }
+//    @Override
+//    @Transactional
+//    public void updateAccessible(Long userId, Long courseId, int status) {
+//        Participant participant = participantRepository.getParticipantByCourse_IdAndUser_Id(courseId, userId);
+//        if (!participant.getRole().equals(ParticipantRole.TEACHER)) {
+//            throw new ForbiddenException("권한이 없습니다.");
+//        }
+//        Course course = courseRepository.findById(courseId)
+//                .orElseThrow(() -> new NotFoundException("can not find course. input courseId: " + courseId));
+//        course.updateAccessible(status);
+//    }
 
-    @Override
-    @Transactional
-    public void updateActive(Long userId, Long courseId, int status) {
-        Participant participant = participantRepository.getParticipantByCourse_IdAndUser_Id(courseId, userId);
-        if (!participant.getRole().equals(ParticipantRole.TEACHER)) {
-            throw new ForbiddenException("권한이 없습니다.");
-        }
-        Course course = courseRepository.findById(courseId)
-                .orElseThrow(() -> new NotFoundException("can not find course. input courseId: " + courseId));
-        course.updateActive(status);
-    }
+//    @Override
+//    @Transactional
+//    public void updateActive(Long userId, Long courseId, int status) {
+//        Participant participant = participantRepository.getParticipantByCourse_IdAndUser_Id(courseId, userId);
+//        if (!participant.getRole().equals(ParticipantRole.TEACHER)) {
+//            throw new ForbiddenException("권한이 없습니다.");
+//        }
+//        Course course = courseRepository.findById(courseId)
+//                .orElseThrow(() -> new NotFoundException("can not find course. input courseId: " + courseId));
+//        course.updateActive(status);
+//    }
 
 
     @Override

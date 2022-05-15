@@ -34,7 +34,6 @@ public class Participant extends AuditingCreateEntity {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id")
-    @OnDelete(action = OnDeleteAction.CASCADE)
     private User user;
 
     @Column(length = 15, nullable = false)

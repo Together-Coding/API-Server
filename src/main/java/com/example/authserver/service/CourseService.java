@@ -9,11 +9,11 @@ public interface CourseService {
 
     Long register(String name, String password, String description);
 
-    void addUser(Long teacherId, String[] email, Long courseId);
+    void addUser(Long teacherId, List<String> email, Long courseId);
 
-    void updateAccessible(Long userId, Long courseId, int status);
-
-    void updateActive(Long userId, Long courseId, int status);
+//    void updateAccessible(Long userId, Long courseId, int status);
+//
+//    void updateActive(Long userId, Long courseId, int status);
 
     void addTeacher(String teacherEmail, Long courseId);
 
