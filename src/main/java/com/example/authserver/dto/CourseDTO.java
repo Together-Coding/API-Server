@@ -21,11 +21,8 @@ public class CourseDTO {
 
         private String password;
 
-        private String teacherName;
-
         private String description;
 
-        private String[] participants;
     }
 
     @Getter

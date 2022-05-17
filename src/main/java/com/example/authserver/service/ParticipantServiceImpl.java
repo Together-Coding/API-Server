@@ -51,5 +51,11 @@ public class ParticipantServiceImpl implements ParticipantService {
         return participantRepository.getParticipantsByUser_IdAndRoleOrderByIdDesc(userId, ParticipantRole.TEACHER);
     }
 
+    @Override
+    @Transactional
+    public void changeNickname(Long userId, Long courseId, String nickName){
+        Participant participant = participantRepository.getParticipantByCourse_IdAndUser_Id(courseId, userId);
+        participant.updateNickname(nickName);
+    }
 
 }

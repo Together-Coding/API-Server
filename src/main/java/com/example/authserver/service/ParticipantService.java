@@ -12,4 +12,6 @@ public interface ParticipantService {
     List<Participant> getCoursesThatIamStudentByUserId(Long userId);
 
     List<Participant> getCoursesThatIamTeacherByUserId(Long userId);
+
+    void changeNickname(Long userId, Long courseId, String nickName);
 }

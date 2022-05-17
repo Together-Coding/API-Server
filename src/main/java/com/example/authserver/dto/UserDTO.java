@@ -2,6 +2,7 @@ package com.example.authserver.dto;
 
 
 import lombok.AccessLevel;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
@@ -31,6 +32,16 @@ public class UserDTO {
 
         private String name;
 
+    }
+
+    @Getter
+    @AllArgsConstructor
+    @NoArgsConstructor
+    public static class Nickname {
+
+        private Long courseId;
+
+        private String nickname;
     }
 
     @Getter

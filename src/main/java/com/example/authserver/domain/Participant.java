@@ -44,6 +44,10 @@ public class Participant extends AuditingCreateEntity {
         this.user = user;
     }
 
+    public void updateNickname(String nickname){
+        this.nickname = nickname;
+    }
+
     @Builder
     private Participant(Course course, User user, ParticipantRole role){
         this.course = course;
