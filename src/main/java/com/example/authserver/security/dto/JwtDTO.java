@@ -18,6 +18,8 @@ public class JwtDTO {
 
     private String email;
 
+    private String errorMsg = null;
+
     private Date issuedAt;
 
     private Date expiredAt;

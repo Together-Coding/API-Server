@@ -77,6 +77,10 @@ public class CourseDTO {
     @Builder
     public static class CourseWithParticipants {
 
+        private String teacherEmail;
+
+        private String teacherName;
+
         private Long courseId;
 
         private String name;

@@ -155,9 +155,10 @@ public class CourseServiceImpl implements CourseService {
     @Transactional
     public CourseDTO.CourseWithParticipants getCourseData(Long courseId) {
         List<ParticipantDTO> participants = participantService.getParticipantList(courseId);
-        Course course = courseRepository.findById(courseId)
-                .orElseThrow(() -> new NotFoundException("can not find course. input courseId: " + courseId));
+        Course course = courseRepository.findCourseById(courseId);
         return CourseDTO.CourseWithParticipants.builder()
+                .teacherEmail(course.getUser().getEmail())
+                .teacherName(course.getUser().getName())
                 .courseId(course.getId())
                 .name(course.getName())
                 .description(course.getDescription())

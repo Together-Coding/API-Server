@@ -1,8 +1,7 @@
 package com.example.authserver.security.util;
 
 import com.example.authserver.security.dto.JwtDTO;
-import io.jsonwebtoken.Jwts;
-import io.jsonwebtoken.SignatureAlgorithm;
+import io.jsonwebtoken.*;
 import io.jsonwebtoken.impl.DefaultClaims;
 import io.jsonwebtoken.impl.DefaultJws;
 import lombok.extern.slf4j.Slf4j;
@@ -54,7 +53,8 @@ public class JWTUtil {
         } catch (Exception e) {
             e.printStackTrace();
             log.error(e.getMessage());
-            jwtDTO = null;
+            throw new JwtException(e.getMessage());
+
         }
         return jwtDTO;
     }

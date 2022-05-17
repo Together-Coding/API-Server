@@ -5,6 +5,7 @@ import com.example.authserver.security.dto.AuthUserDTO;
 import com.example.authserver.security.dto.JwtDTO;
 import com.example.authserver.security.util.JWTUtil;
 import com.example.authserver.service.UserService;
+import io.jsonwebtoken.JwtException;
 import io.jsonwebtoken.SignatureException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -34,13 +35,16 @@ public class AuthController {
     @PostMapping("/token")
     public JwtDTO validateToken(@RequestBody Map<String, String> token) throws Exception {
         String jwt = token.get("token");
-        JwtDTO jwtDTO = jwtUtil.validateAndExtract(jwt);
-        if (jwtDTO != null) {
+        JwtDTO jwtDTO = null;
+        try {
+            jwtDTO = jwtUtil.validateAndExtract(jwt);
+        } catch (Exception e){
+            throw new JwtException(e.getMessage());
+        }
+        if (jwtDTO.isValid()) {
             String email = jwtDTO.getEmail();
             Long userId = userService.getUserByEmail(email).getId();
             jwtDTO.updateUserId(userId);
-        } else {
-            throw new SignatureException("토큰 에러");
         }
         return jwtDTO;
     }
