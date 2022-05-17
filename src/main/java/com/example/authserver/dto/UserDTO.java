@@ -1,10 +1,7 @@
 package com.example.authserver.dto;
 
 
-import lombok.AccessLevel;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
@@ -13,6 +10,17 @@ import javax.validation.constraints.Pattern;
 
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class UserDTO {
+
+    @Getter
+    @Builder
+    public static class MyInfo {
+
+        private Long userId;
+
+        private String name;
+
+        private String email;
+    }
 
     @Getter
     public static class Signup {

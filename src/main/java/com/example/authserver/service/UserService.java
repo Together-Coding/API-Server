@@ -1,8 +1,11 @@
 package com.example.authserver.service;
 
 import com.example.authserver.domain.User;
+import com.example.authserver.dto.UserDTO;
 
 public interface UserService {
+
+    UserDTO.MyInfo getUserInfo(Long userId);
 
     void signup(String email, String password, String name);
 

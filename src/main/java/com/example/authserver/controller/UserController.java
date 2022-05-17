@@ -5,6 +5,7 @@ import com.example.authserver.security.dto.AuthUserDTO;
 import com.example.authserver.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -12,12 +13,17 @@ import org.springframework.web.bind.annotation.RestController;
 import javax.validation.Valid;
 
 
-@RequestMapping("/auth")
+@RequestMapping("/api/user")
 @RestController
 @RequiredArgsConstructor
 public class UserController {
 
     private final UserService userService;
+
+    @GetMapping
+    public UserDTO.MyInfo getUserInfo(@AuthenticationPrincipal AuthUserDTO authUser){
+        return userService.getUserInfo(authUser.getId());
+    }
 
     @PutMapping
     public void updateUser(@AuthenticationPrincipal AuthUserDTO authUser,
@@ -25,11 +31,11 @@ public class UserController {
 
         userService.updateUser(
                 authUser.getId(),
-                authUser.getName()
+                updateDTO.getName()
         );
     }
 
-    @PutMapping("/api/user/password")
+    @PutMapping("/password")
     public void changePassword(@AuthenticationPrincipal AuthUserDTO authUser,
                                @Valid UserDTO.Password passwordDTO) {
 

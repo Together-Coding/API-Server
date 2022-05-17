@@ -2,6 +2,7 @@ package com.example.authserver.service;
 
 import com.example.authserver.domain.User;
 import com.example.authserver.domain.UserRole;
+import com.example.authserver.dto.UserDTO;
 import com.example.authserver.exception.custom.AlreadyExistsException;
 import com.example.authserver.exception.custom.InvalidArgsException;
 import com.example.authserver.exception.custom.NotFoundException;
@@ -80,4 +81,14 @@ public class UserServiceImpl implements UserService{
                 .orElseThrow(() -> new NotFoundException("can not find user. input email: " + email));
     }
 
+    @Override
+    @Transactional
+    public UserDTO.MyInfo getUserInfo(Long userId){
+        User user = this.getUser(userId);
+        return UserDTO.MyInfo.builder()
+                .email(user.getEmail())
+                .userId(user.getId())
+                .name(user.getName())
+                .build();
+    }
 }
