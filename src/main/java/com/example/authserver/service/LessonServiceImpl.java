@@ -3,6 +3,8 @@ package com.example.authserver.service;
 
 import com.example.authserver.domain.Course;
 import com.example.authserver.domain.Lesson;
+import com.example.authserver.domain.LessonFile;
+import com.example.authserver.dto.LessonDTO;
 import com.example.authserver.exception.custom.ForbiddenException;
 import com.example.authserver.exception.custom.NotFoundException;
 import com.example.authserver.repository.CourseRepository;
@@ -12,6 +14,7 @@ import lombok.extern.log4j.Log4j2;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Log4j2
@@ -90,7 +93,23 @@ public class LessonServiceImpl implements LessonService {
 
     @Override
     @Transactional
-    public List<Lesson> getLessons(Long courseId){
-        return lessonRepository.findAllByCourse_Id(courseId);
+    public List<LessonDTO.Resp> getLessons(Long courseId) {
+        List<Lesson> lessons = lessonRepository.findAllByCourse_Id(courseId);
+        List<LessonDTO.Resp> dtos = new ArrayList<>();
+        for (Lesson lesson : lessons) {
+            LessonFile lessonFile = lesson.getLessonFile();
+            String fileUrl = null;
+            if (lessonFile != null) {
+                fileUrl = lessonFile.getUrl();
+            }
+            dtos.add(LessonDTO.Resp.builder()
+                    .courseId(lesson.getCourse().getId())
+                    .lessonId(lesson.getId())
+                    .fileUrl(fileUrl)
+                    .description(lesson.getDescription())
+                    .name(lesson.getName())
+                    .build());
+        }
+        return dtos;
     }
 }

@@ -7,7 +7,7 @@ import java.util.List;
 
 public interface CourseService {
 
-    Long register(String name, String password, String description);
+    Long register(Long userId, String name, String password, String description);
 
     void addUser(Long teacherId, List<String> email, Long courseId);
 
@@ -15,11 +15,11 @@ public interface CourseService {
 //
 //    void updateActive(Long userId, Long courseId, int status);
 
-    void addTeacher(String teacherEmail, Long courseId);
+    void updateTeacher(String teacherEmail, Long courseId);
 
     void delete(Long courseId, Long userId);
 
-    void changePw(Long courseId, String newPw);
+    void changePw(Long userId, Long courseId, String newPw);
 
     List<CourseDTO.Response> getCoursesWhereIamTeacher(Long userId);
 

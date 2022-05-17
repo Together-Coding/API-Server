@@ -23,4 +23,6 @@ public interface ParticipantRepository extends JpaRepository<Participant, Long> 
 
     @EntityGraph(attributePaths = {"user"}, type = EntityGraph.EntityGraphType.LOAD)
     Participant getParticipantByCourse_IdAndUser_Id(Long courseId, Long userId);
+
+    Participant findByCourse_IdAndRole(Long courseId, ParticipantRole participantRole);
 }

@@ -1,6 +1,7 @@
 package com.example.authserver.service;
 
 import com.example.authserver.domain.Lesson;
+import com.example.authserver.dto.LessonDTO;
 
 import java.util.List;
 
@@ -14,5 +15,5 @@ public interface LessonService {
 
     void delete(Long id, Long userId);
 
-    List<Lesson> getLessons(Long courseId);
+    List<LessonDTO.Resp> getLessons(Long courseId);
 }

@@ -2,6 +2,7 @@ package com.example.authserver.domain;
 
 import com.example.authserver.domain.base.AuditingCreateEntity;
 import lombok.AccessLevel;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
@@ -19,4 +20,8 @@ public class LessonFile extends AuditingCreateEntity {
 
     private String url;
 
+    @Builder
+    private LessonFile(String url) {
+        this.url = url;
+    }
 }

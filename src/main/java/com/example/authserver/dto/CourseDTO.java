@@ -29,6 +29,19 @@ public class CourseDTO {
     }
 
     @Getter
+    @AllArgsConstructor
+    @NoArgsConstructor
+    public static class Password {
+
+        @NotBlank
+        String password;
+
+        @NotNull
+        Long courseId;
+
+    }
+
+    @Getter
     @NoArgsConstructor
     @AllArgsConstructor
     public static class AddUser {

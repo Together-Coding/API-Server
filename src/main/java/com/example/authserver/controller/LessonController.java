@@ -18,26 +18,28 @@ public class LessonController {
 
     private final LessonService lessonService;
 
+    // 테스트 완료
     @GetMapping("/{courseId}")
-    public List<Lesson> getLessons(@PathVariable Long courseId) {
+    public List<LessonDTO.Resp> getLessons(@PathVariable Long courseId) {
         return lessonService.getLessons(courseId);
     }
 
-    // TODO: validation check!!!
+    // 테스트 완료
     @PostMapping
-    public void registerLesson(LessonDTO lessonDTO, Long courseId, @AuthenticationPrincipal AuthUserDTO authUser) {
+    public void registerLesson(@RequestBody LessonDTO.Register lessonDTO,
+                               @AuthenticationPrincipal AuthUserDTO authUser) {
 
         lessonService.register(
                 lessonDTO.getName(),
                 lessonDTO.getDescription(),
-                courseId,
+                lessonDTO.getCourseId(),
                 authUser.getId());
     }
 
     @PutMapping("/name/{lessonId}")
     public void updateName(@AuthenticationPrincipal AuthUserDTO authUser,
                            @PathVariable Long lessonId,
-                           String name) {
+                           @RequestBody String name) {
 
         lessonService.updateName(
                 lessonId,
@@ -49,7 +51,7 @@ public class LessonController {
     @PutMapping("/description/{lessonId}")
     public void updateDescription(@AuthenticationPrincipal AuthUserDTO authUser,
                                   @PathVariable Long lessonId,
-                                  String description) {
+                                  @RequestBody String description) {
 
         lessonService.updateDescription(
                 lessonId,
@@ -64,4 +66,5 @@ public class LessonController {
 
         lessonService.delete(lessonId, authUser.getId());
     }
+
 }

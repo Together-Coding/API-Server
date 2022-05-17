@@ -17,34 +17,40 @@ public class CourseController {
 
     private final CourseService courseService;
 
+    // 테스트 완료
     @PostMapping
-    public void registerCourse(@RequestBody @Valid CourseDTO.Request courseDTO) {
+    public void registerCourse(@AuthenticationPrincipal AuthUserDTO authUser,
+                               @RequestBody @Valid CourseDTO.Request courseDTO) {
         courseService.register(
+                authUser.getId(),
                 courseDTO.getName(),
                 courseDTO.getPassword(),
                 courseDTO.getDescription()
         );
     }
 
-    @PostMapping("/teacher")
+    // 테스트 완료
+    @PutMapping("/teacher")
     public void addTeacher(@RequestBody @Valid CourseDTO.AddTeacher teacherDTO) {
 
-        courseService.addTeacher(
+        courseService.updateTeacher(
                 teacherDTO.getTeacherEmail(),
                 teacherDTO.getCourseId());
     }
 
-
+    // 테스트 완료
     @GetMapping("/student")
     public List<CourseDTO.Response> getStudentCourse(@AuthenticationPrincipal AuthUserDTO authUser) {
         return courseService.getCoursesWhereIamStudent(authUser.getId());
     }
 
+    // 테스트 완료
     @GetMapping("/teacher")
     public List<CourseDTO.Response> getTeacherCourse(@AuthenticationPrincipal AuthUserDTO authUser) {
         return courseService.getCoursesWhereIamTeacher(authUser.getId());
     }
 
+    // 테스트 완료
     @GetMapping("/{courseId}")
     public CourseDTO.CourseWithParticipants getCourseWithParticipants(@PathVariable("courseId") Long courseId) {
         return courseService.getCourseData(courseId);
@@ -58,6 +64,7 @@ public class CourseController {
                 authUser.getId());
     }
 
+    // 테스트 완료
     @PostMapping("/student")
     public void registerNewStudent(@AuthenticationPrincipal AuthUserDTO authUser,
                                    @RequestBody CourseDTO.AddUser addUser) {
@@ -67,4 +74,14 @@ public class CourseController {
                 addUser.getCourseId());
     }
 
+    // 테스트 완료
+    @PutMapping("/password")
+    public void changePassword(@AuthenticationPrincipal AuthUserDTO authUser,
+                               @RequestBody CourseDTO.Password passwordDTO){
+        courseService.changePw(
+                authUser.getId(),
+                passwordDTO.getCourseId(),
+                passwordDTO.getPassword()
+        );
+    }
 }

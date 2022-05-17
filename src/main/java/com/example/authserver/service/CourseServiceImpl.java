@@ -32,16 +32,24 @@ public class CourseServiceImpl implements CourseService {
 
     @Override
     @Transactional
-    public Long register(String name, String password, String description) {
+    public Long register(Long userId, String name, String password, String description) {
         String enPw = passwordEncoder.encode(password);
-
+        User user = userService.getUser(userId);
         Course course = Course.builder()
                 .name(name)
+                .user(user)
                 .password(enPw)
                 .description(description)
                 .build();
 
         courseRepository.save(course);
+
+        participantRepository.save(Participant.builder()
+                .role(ParticipantRole.TEACHER)
+                .course(course)
+                .user(user)
+                .build());
+
         return course.getId();
     }
 
@@ -68,24 +76,23 @@ public class CourseServiceImpl implements CourseService {
 
     @Override
     @Transactional
-    public void addTeacher(String teacherEmail, Long courseId) {
+    public void updateTeacher(String teacherEmail, Long courseId) {
         User user = userService.getUserByEmail(teacherEmail);
         Course course = courseRepository.findById(courseId)
                 .orElseThrow(() -> new NotFoundException("can not find course. input courseId: " + courseId));
         course.updateUser(user);
-        participantRepository.save(Participant.builder()
-                .user(user)
-                .course(course)
-                .role(ParticipantRole.TEACHER)
-                .build());
+        Participant participant = participantRepository.findByCourse_IdAndRole(courseId, ParticipantRole.TEACHER);
+        participant.updateUser(user);
     }
 
     @Override
     @Transactional
-    public void changePw(Long courseId, String newPw) {
+    public void changePw(Long userId, Long courseId, String newPw) {
         Course course = courseRepository.findById(courseId)
                 .orElseThrow(() -> new NotFoundException("can not find course. input courseId: " + courseId));
-
+        if (!course.getUser().getId().equals(userId)) {
+            throw new ForbiddenException("권한이 없습니다.");
+        }
         String enPw = passwordEncoder.encode(newPw);
         course.updatePw(enPw);
         courseRepository.save(course);

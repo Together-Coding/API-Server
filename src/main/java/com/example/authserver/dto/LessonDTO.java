@@ -1,12 +1,46 @@
 package com.example.authserver.dto;
 
 
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 
-@Getter
+import javax.validation.constraints.NotNull;
+
+@Builder
+@NoArgsConstructor
 public class LessonDTO {
 
-    private String name;
+    @Getter
+    @AllArgsConstructor
+    @NoArgsConstructor
+    public static class Register {
 
-    private String description;
+        @NotNull
+        private Long courseId;
+
+        @NotNull
+        private String name;
+
+        @NotNull
+        private String description;
+    }
+
+    @Getter
+    @Builder
+    public static class Resp {
+
+        private Long lessonId;
+
+        private Long courseId;
+
+        private String name;
+
+        private String description;
+
+        private String fileUrl;
+    }
+
+
 }

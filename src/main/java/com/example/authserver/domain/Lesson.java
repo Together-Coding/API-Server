@@ -44,6 +44,10 @@ public class Lesson extends AuditingCreateEntity {
         this.active = 1;
     }
 
+    public void updateLessonFile(LessonFile lessonFile) {
+        this.lessonFile = lessonFile;
+    }
+
     public void updateActive(int status){this.active = status;}
 
     public void updateName(String name){

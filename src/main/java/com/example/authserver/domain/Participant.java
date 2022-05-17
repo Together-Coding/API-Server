@@ -40,6 +40,10 @@ public class Participant extends AuditingCreateEntity {
     @Enumerated(EnumType.STRING)
     private ParticipantRole role = ParticipantRole.STUDENT;
 
+    public void updateUser(User user){
+        this.user = user;
+    }
+
     @Builder
     private Participant(Course course, User user, ParticipantRole role){
         this.course = course;
