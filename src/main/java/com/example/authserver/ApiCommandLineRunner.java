@@ -29,10 +29,10 @@ public class ApiCommandLineRunner implements CommandLineRunner {
 
     @Override
     public void run(String... args) throws Exception {
-        this.insertUser();
-        this.insertCourse();
-        this.addTeacher();
-        this.insertParticipants();
+//        this.insertUser();
+//        this.insertCourse();
+//        this.addTeacher();
+//        this.insertParticipants();
     }
 
     private void insertUser() {

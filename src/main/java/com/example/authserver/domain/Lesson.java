@@ -36,12 +36,16 @@ public class Lesson extends AuditingCreateEntity {
     @JoinColumn(name = "lesson_file_id")
     private LessonFile lessonFile;
 
+    @Column(nullable = false)
+    private Long lang_image_id;
+
     @Builder
     private Lesson(String name, String description, Course course) {
         this.name = name;
         this.description = description;
         this.course = course;
         this.active = 1;
+        this.lang_image_id = 1L;
     }
 
     public void updateLessonFile(LessonFile lessonFile) {

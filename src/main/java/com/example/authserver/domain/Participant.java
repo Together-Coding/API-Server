@@ -50,6 +50,7 @@ public class Participant extends AuditingCreateEntity {
 
     @Builder
     private Participant(Course course, User user, ParticipantRole role){
+        this.nickname = "";
         this.course = course;
         this.user = user;
         this.role = role;

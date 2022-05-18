@@ -11,10 +11,6 @@ public interface CourseService {
 
     void addUser(Long teacherId, List<String> email, Long courseId);
 
-//    void updateAccessible(Long userId, Long courseId, int status);
-//
-//    void updateActive(Long userId, Long courseId, int status);
-
     void updateTeacher(String teacherEmail, Long courseId);
 
     void delete(Long courseId, Long userId);
