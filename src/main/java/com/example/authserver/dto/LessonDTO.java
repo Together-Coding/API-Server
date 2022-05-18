@@ -25,6 +25,9 @@ public class LessonDTO {
 
         @NotNull
         private String description;
+
+        @NotNull
+        private Long lang_image_id;
     }
 
     @Getter

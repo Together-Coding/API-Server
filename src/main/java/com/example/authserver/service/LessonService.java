@@ -7,7 +7,7 @@ import java.util.List;
 
 public interface LessonService {
 
-    void register(String name, String description, Long courseId, Long userId);
+    void register(String name, String description, Long courseId, Long userId, Long lang_image_id);
 
     void updateName(Long lessonId, Long userId, String name);
 

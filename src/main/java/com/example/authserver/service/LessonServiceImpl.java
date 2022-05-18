@@ -27,7 +27,7 @@ public class LessonServiceImpl implements LessonService {
 
     @Override
     @Transactional
-    public void register(String name, String description, Long courseId, Long userId) {
+    public void register(String name, String description, Long courseId, Long userId, Long lang_image_id) {
         Course course = courseRepository.findById(courseId)
                 .orElseThrow(() -> new NotFoundException("can not find course. input courseId: " + courseId));
 
@@ -40,6 +40,7 @@ public class LessonServiceImpl implements LessonService {
         Lesson lesson = Lesson.builder()
                 .name(name)
                 .description(description)
+                .lang_image_id(lang_image_id)
                 .course(course)
                 .build();
 

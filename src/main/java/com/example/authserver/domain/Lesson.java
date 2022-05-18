@@ -40,12 +40,12 @@ public class Lesson extends AuditingCreateEntity {
     private Long lang_image_id;
 
     @Builder
-    private Lesson(String name, String description, Course course) {
+    private Lesson(String name, String description, Course course, Long lang_image_id) {
         this.name = name;
         this.description = description;
         this.course = course;
         this.active = 1;
-        this.lang_image_id = 1L;
+        this.lang_image_id = lang_image_id;
     }
 
     public void updateLessonFile(LessonFile lessonFile) {
