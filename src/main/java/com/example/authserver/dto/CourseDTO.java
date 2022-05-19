@@ -89,4 +89,14 @@ public class CourseDTO {
 
         private List<ParticipantDTO> participants;
     }
+
+    @Getter
+    @AllArgsConstructor
+    @NoArgsConstructor
+    public static class Update {
+
+        private String name;
+
+        private String description;
+    }
 }

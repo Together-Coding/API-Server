@@ -40,24 +40,24 @@ public class LessonController {
     @PutMapping("/name/{lessonId}")
     public void updateName(@AuthenticationPrincipal AuthUserDTO authUser,
                            @PathVariable Long lessonId,
-                           @RequestBody String name) {
+                           @RequestBody LessonDTO.Update update) {
 
         lessonService.updateName(
                 lessonId,
                 authUser.getId(),
-                name
+                update.getName()
         );
     }
 
     @PutMapping("/description/{lessonId}")
     public void updateDescription(@AuthenticationPrincipal AuthUserDTO authUser,
                                   @PathVariable Long lessonId,
-                                  @RequestBody String description) {
+                                  @RequestBody LessonDTO.Update update) {
 
         lessonService.updateDescription(
                 lessonId,
                 authUser.getId(),
-                description
+                update.getDescription()
         );
     }
 

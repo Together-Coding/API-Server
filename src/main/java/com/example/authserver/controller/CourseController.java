@@ -1,6 +1,7 @@
 package com.example.authserver.controller;
 
 import com.example.authserver.dto.CourseDTO;
+import com.example.authserver.dto.LessonDTO;
 import com.example.authserver.security.dto.AuthUserDTO;
 import com.example.authserver.service.CourseService;
 import lombok.RequiredArgsConstructor;
@@ -16,6 +17,7 @@ import java.util.List;
 public class CourseController {
 
     private final CourseService courseService;
+
 
     // 테스트 완료
     @PostMapping

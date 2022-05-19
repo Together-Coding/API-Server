@@ -31,6 +31,16 @@ public class LessonDTO {
     }
 
     @Getter
+    @AllArgsConstructor
+    @NoArgsConstructor
+    public static class Update {
+
+        private String name;
+
+        private String description;
+    }
+
+    @Getter
     @Builder
     public static class Resp {
 
