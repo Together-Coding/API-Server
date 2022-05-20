@@ -17,10 +17,13 @@ public class CourseDTO {
     @Getter
     public static class Request {
 
+        @NotBlank
         private String name;
 
+        @NotBlank
         private String password;
 
+        @NotBlank
         private String description;
 
     }
@@ -43,7 +46,10 @@ public class CourseDTO {
     @AllArgsConstructor
     public static class AddUser {
 
+        @NotNull
         private List<String> emails;
+
+        @NotNull
         private Long courseId;
     }
 

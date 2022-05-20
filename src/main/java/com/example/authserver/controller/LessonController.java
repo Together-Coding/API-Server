@@ -33,8 +33,8 @@ public class LessonController {
                 lessonDTO.getName(),
                 lessonDTO.getDescription(),
                 lessonDTO.getCourseId(),
-                lessonDTO.getLang_image_id(),
-                authUser.getId());
+                authUser.getId(),
+                lessonDTO.getLang_image_id());
     }
 
     @PutMapping("/name/{lessonId}")

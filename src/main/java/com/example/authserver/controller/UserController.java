@@ -5,10 +5,7 @@ import com.example.authserver.security.dto.AuthUserDTO;
 import com.example.authserver.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 
@@ -27,7 +24,7 @@ public class UserController {
 
     @PutMapping
     public void updateUser(@AuthenticationPrincipal AuthUserDTO authUser,
-                           @Valid UserDTO.Update updateDTO) {
+                           @RequestBody @Valid UserDTO.Update updateDTO) {
 
         userService.updateUser(
                 authUser.getId(),
@@ -37,7 +34,7 @@ public class UserController {
 
     @PutMapping("/password")
     public void changePassword(@AuthenticationPrincipal AuthUserDTO authUser,
-                               @Valid UserDTO.Password passwordDTO) {
+                               @RequestBody @Valid UserDTO.Password passwordDTO) {
 
         userService.updatePassword(
                 authUser.getId(),

@@ -13,7 +13,7 @@ public interface LessonService {
 
     void updateDescription(Long lessonId, Long userId, String description);
 
-    void delete(Long id, Long userId);
+    void delete(Long lessonId, Long userId);
 
     List<LessonDTO.Resp> getLessons(Long courseId);
 }

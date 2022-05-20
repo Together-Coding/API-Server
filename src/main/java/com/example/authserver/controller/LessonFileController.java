@@ -11,6 +11,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import javax.validation.Valid;
+
 @RequestMapping("/api/file")
 @RestController
 @RequiredArgsConstructor
@@ -20,7 +22,7 @@ public class LessonFileController {
 
     @PostMapping
     public void registerLessonFile(@AuthenticationPrincipal AuthUserDTO authUser,
-                                   @RequestBody LessonFileDTO.File fileDTO) {
+                                   @RequestBody @Valid LessonFileDTO.File fileDTO) {
 
         lessonFileService.register(
                 fileDTO.getUrl(),

@@ -79,9 +79,9 @@ public class LessonServiceImpl implements LessonService {
 
     @Override
     @Transactional
-    public void delete(Long id, Long userId) {
-        Lesson lesson = lessonRepository.findById(id)
-                .orElseThrow(() -> new NotFoundException("can not find lesson. input lessonId: " + id));
+    public void delete(Long lessonId, Long userId) {
+        Lesson lesson = lessonRepository.findById(lessonId)
+                .orElseThrow(() -> new NotFoundException("can not find lesson. input lessonId: " + lessonId));
 
         Long ownerId = lesson.getCourse().getUser().getId();
 

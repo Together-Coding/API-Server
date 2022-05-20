@@ -69,7 +69,7 @@ public class CourseController {
     // 테스트 완료
     @PostMapping("/student")
     public void registerNewStudent(@AuthenticationPrincipal AuthUserDTO authUser,
-                                   @RequestBody CourseDTO.AddUser addUser) {
+                                   @RequestBody @Valid CourseDTO.AddUser addUser) {
         courseService.addUser(
                 authUser.getId(),
                 addUser.getEmails(),
@@ -79,7 +79,7 @@ public class CourseController {
     // 테스트 완료
     @PutMapping("/password")
     public void changePassword(@AuthenticationPrincipal AuthUserDTO authUser,
-                               @RequestBody CourseDTO.Password passwordDTO){
+                               @RequestBody @Valid CourseDTO.Password passwordDTO){
         courseService.changePw(
                 authUser.getId(),
                 passwordDTO.getCourseId(),
