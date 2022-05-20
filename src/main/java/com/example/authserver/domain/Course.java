@@ -33,16 +33,23 @@ public class Course extends AuditingCreateUpdateEntity {
     private User user;
 
     @Builder
-    private Course(String name, User user, String description ,String password){
+    private Course(String name, User user, String description, String password) {
         this.name = name;
         this.user = user;
         this.description = description;
         this.password = password;
     }
 
-    public void updatePw(String password){
+    public void updatePw(String password) {
         this.password = password;
     }
 
-    public void updateUser(User user) {this.user = user;}
+    public void updateUser(User user) {
+        this.user = user;
+    }
+
+    public void update(String name, String description) {
+        this.name = name;
+        this.description = description;
+    }
 }

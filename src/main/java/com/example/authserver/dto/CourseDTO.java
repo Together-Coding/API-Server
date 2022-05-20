@@ -101,8 +101,8 @@ public class CourseDTO {
     @NoArgsConstructor
     public static class Update {
 
-        private String name;
+        private String name = null;
 
-        private String description;
+        private String description = null;
     }
 }

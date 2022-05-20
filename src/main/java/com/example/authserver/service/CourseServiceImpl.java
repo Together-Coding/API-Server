@@ -153,6 +153,29 @@ public class CourseServiceImpl implements CourseService {
 
     @Override
     @Transactional
+    public void update(Long userId, Long courseId, String name, String description) {
+        Course course = courseRepository.findById(courseId)
+                .orElseThrow(() -> new NotFoundException("can not find course. input courseId: " + courseId));
+        if (!course.getUser().getId().equals(userId)) {
+            throw new ForbiddenException("권한이 없습니다.");
+        }
+        String changedName;
+        String changedDescription;
+        if (name == null) {
+            changedName = course.getName();
+        } else {
+            changedName = name;
+        }
+        if (description == null) {
+            changedDescription = course.getDescription();
+        } else {
+            changedDescription = description;
+        }
+        course.update(changedName, changedDescription);
+    }
+
+    @Override
+    @Transactional
     public CourseDTO.CourseWithParticipants getCourseData(Long courseId) {
         List<ParticipantDTO> participants = participantService.getParticipantList(courseId);
         Course course = courseRepository.findCourseById(courseId);

@@ -86,4 +86,17 @@ public class CourseController {
                 passwordDTO.getPassword()
         );
     }
+
+    @PutMapping("/{courseId}")
+    public void changeCourse(@AuthenticationPrincipal AuthUserDTO authUser,
+                             @RequestBody @Valid CourseDTO.Update update,
+                             @PathVariable Long courseId) {
+
+        courseService.update(
+                authUser.getId(),
+                courseId,
+                update.getName(),
+                update.getDescription()
+        );
+    }
 }
