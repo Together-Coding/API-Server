@@ -17,6 +17,8 @@ public interface CourseService {
 
     void changePw(Long userId, Long courseId, String newPw);
 
+    boolean checkPassword(Long courseId, String password);
+
     void update(Long userId, Long courseId, String name, String description);
 
     List<CourseDTO.Response> getCoursesWhereIamTeacher(Long userId);

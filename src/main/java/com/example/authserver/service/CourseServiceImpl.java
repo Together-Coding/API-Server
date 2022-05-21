@@ -55,6 +55,15 @@ public class CourseServiceImpl implements CourseService {
 
     @Override
     @Transactional
+    public boolean checkPassword(Long courseId, String password) {
+        Course course = courseRepository.findById(courseId)
+                .orElseThrow(() -> new NotFoundException("can not find course. input courseId: " + courseId));
+
+        return passwordEncoder.matches(password, course.getPassword());
+    }
+
+    @Override
+    @Transactional
     public void addUser(Long teacherId, List<String> emails, Long courseId) {
         Course course = courseRepository.findById(courseId)
                 .orElseThrow(() -> new NotFoundException("can not find course. input courseId: " + courseId));

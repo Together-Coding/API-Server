@@ -29,6 +29,12 @@ public class ApiCommandLineRunner implements CommandLineRunner {
 
     @Override
     public void run(String... args) throws Exception {
+        userService.signup("test@naver.com", "1234", "teacher1");
+        courseService.register(
+                1L,
+                "코스1",
+                "1234",
+                "설명");
 //        this.insertUser();
 //        this.insertCourse();
 //        this.addTeacher();

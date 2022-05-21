@@ -9,7 +9,9 @@ import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @RequestMapping("/api/course")
 @RestController
@@ -86,6 +88,17 @@ public class CourseController {
                 passwordDTO.getPassword()
         );
     }
+
+    @PostMapping("/password")
+    public Map<String, Boolean> checkPassword(@RequestBody @Valid CourseDTO.Password passwordDTO) {
+        Map<String, Boolean> dto = new HashMap<>();
+        boolean result = courseService.checkPassword(
+                passwordDTO.getCourseId(),
+                passwordDTO.getPassword());
+        dto.put("valid", result);
+        return dto;
+    }
+
 
     @PutMapping("/{courseId}")
     public void changeCourse(@AuthenticationPrincipal AuthUserDTO authUser,
