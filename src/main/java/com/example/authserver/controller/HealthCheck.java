@@ -8,6 +8,6 @@ public class HealthCheck {
 
     @GetMapping("/")
     public String healthCheck() {
-        return "The Service is up and running...";
+        return " [ Together-Coding Service is Running ]";
     }
 }

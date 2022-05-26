@@ -198,7 +198,8 @@ public class CourseServiceImpl implements CourseService {
                 .build();
     }
 
-    private List<CourseDTO.Response> getCourseResp(List<Participant> participants, String role) {
+
+    public List<CourseDTO.Response> getCourseResp(List<Participant> participants, String role) {
         List<CourseDTO.Response> responses = new ArrayList<>();
         for (Participant participant : participants) {
             responses.add(CourseDTO.Response.builder()

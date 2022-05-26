@@ -6,6 +6,7 @@ import com.example.authserver.repository.LessonRepository;
 import com.example.authserver.repository.ParticipantRepository;
 import com.example.authserver.repository.UserRepository;
 import com.example.authserver.service.CourseService;
+import com.example.authserver.service.LessonService;
 import com.example.authserver.service.ParticipantService;
 import com.example.authserver.service.UserService;
 import lombok.RequiredArgsConstructor;
@@ -26,6 +27,7 @@ public class ApiCommandLineRunner implements CommandLineRunner {
     private final CourseService courseService;
     private final UserService userService;
     private final ParticipantService participantService;
+    private final LessonService lessonService;
 
     @Override
     public void run(String... args) throws Exception {
@@ -35,6 +37,7 @@ public class ApiCommandLineRunner implements CommandLineRunner {
                 "코스1",
                 "1234",
                 "설명");
+        lessonService.register("레슨","레슨설명", 1L, 1L, 1L);
 //        this.insertUser();
 //        this.insertCourse();
 //        this.addTeacher();
