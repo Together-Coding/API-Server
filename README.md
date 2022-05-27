@@ -1,5 +1,5 @@
-# Authentication-Server
-authentication, rest api
+# Auth, Data Server
+authentication, providing data
 
-## API
+## API Docs
 - https://github.com/Together-Coding/Authentication-Server/wiki/API-%EB%AC%B8%EC%84%9C
