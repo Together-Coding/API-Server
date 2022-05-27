@@ -1,5 +1,6 @@
 package com.example.authserver.util;
 
+import com.amazonaws.HttpMethod;
 import com.amazonaws.services.s3.AmazonS3Client;
 import com.amazonaws.services.s3.model.*;
 import com.amazonaws.util.IOUtils;
@@ -20,7 +21,9 @@ import org.springframework.web.multipart.MultipartFile;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.net.URL;
 import java.net.URLEncoder;
+import java.util.Date;
 import java.util.Optional;
 
 import static org.apache.commons.lang3.StringUtils.isNotEmpty;
@@ -64,7 +67,7 @@ public class S3Uploader {
         String fileName = dirName + "/" + courseId + "/" + lessonId + "/" + uploadFile.getName();
         String uploadImageUrl = putS3(uploadFile, fileName);
         removeNewFile(uploadFile);
-        return uploadImageUrl;
+        return fileName;
     }
 
 
@@ -75,9 +78,35 @@ public class S3Uploader {
                 && StringUtils.isNotEmpty(uploadFile.getOriginalFilename())) {
 
             String contentType = uploadFile.getContentType();
-            return isNotEmpty(contentType) && contentType.toLowerCase().startsWith("image");
+            return isNotEmpty(contentType) && contentType.toLowerCase().contains("zip");
         }
         return false;
+    }
+
+    public String getPreSignedURL(String fileUrl) {
+        String preSignedURL = "";
+        Date expiration = new Date();
+        long expTimeMillis = expiration.getTime();
+        expTimeMillis += 1000 * 60 * 60 * 24 * 7;
+        expiration.setTime(expTimeMillis);
+
+        log.info(expiration.toString());
+        log.info("----------------------------");
+        log.info("fileUrl: {}", fileUrl);
+        try {
+            GeneratePresignedUrlRequest generatePresignedUrlRequest =
+                    new GeneratePresignedUrlRequest(bucket, fileUrl)
+                            .withMethod(HttpMethod.GET)
+                            .withExpiration(expiration);
+            URL url = amazonS3Client.generatePresignedUrl(generatePresignedUrlRequest);
+            preSignedURL = url.toString();
+            log.info("Pre-Signed URL : " + url.toString());
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return preSignedURL;
     }
 
     private String putS3(File uploadFile, String fileName) {

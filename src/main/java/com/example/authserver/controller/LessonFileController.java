@@ -1,5 +1,6 @@
 package com.example.authserver.controller;
 
+import com.amazonaws.services.s3.AmazonS3Client;
 import com.example.authserver.dto.FileDTO;
 import com.example.authserver.security.dto.AuthUserDTO;
 import com.example.authserver.service.LessonFileService;
@@ -21,10 +22,11 @@ import java.util.Map;
 public class LessonFileController {
 
     private final LessonFileService lessonFileService;
+    private final S3Uploader s3Uploader;
 
     @PostMapping(consumes = {MediaType.APPLICATION_JSON_VALUE, MediaType.MULTIPART_FORM_DATA_VALUE})
     public void uploadFile(@AuthenticationPrincipal AuthUserDTO authUser,
-                           @RequestPart("file") MultipartFile multipartFile,
+                           @RequestPart(name = "file", required = false) MultipartFile multipartFile,
                            @RequestPart("uploadDTO") FileDTO.Upload uploadDTO) throws IOException {
 
         final String dirName = "course";
@@ -36,9 +38,9 @@ public class LessonFileController {
                 authUser.getId());
     }
 
-    @GetMapping
-    public ResponseEntity<byte[]> download(@RequestBody FileDTO.Download download) throws IOException {
-        return lessonFileService.download(download.getFileUrl());
+    @PostMapping("url")
+    public String getUrl(@RequestBody FileDTO.Download download) throws IOException{
+        return s3Uploader.getPreSignedURL(download.getFileUrl());
     }
 
     @DeleteMapping

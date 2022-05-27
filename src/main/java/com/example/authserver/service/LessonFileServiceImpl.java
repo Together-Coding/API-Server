@@ -48,7 +48,9 @@ public class LessonFileServiceImpl implements LessonFileService {
         if (!lesson.getCourse().getUser().getId().equals(userId)) {
             throw new ForbiddenException("권한이 없습니다.");
         }
-        lessonFileRepository.deleteById(lesson.getLessonFile().getId());
+        Long fileId = lesson.getLessonFile().getId();
+        lesson.updateLessonFile(null);
+        lessonFileRepository.deleteById(fileId);
         s3Uploader.deleteFile(fileUrl);
     }
 
