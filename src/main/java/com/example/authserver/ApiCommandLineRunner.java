@@ -31,13 +31,13 @@ public class ApiCommandLineRunner implements CommandLineRunner {
 
     @Override
     public void run(String... args) throws Exception {
-        userService.signup("test@naver.com", "1234", "teacher1");
-        courseService.register(
-                1L,
-                "코스1",
-                "1234",
-                "설명");
-        lessonService.register("레슨","레슨설명", 1L, 1L, 1L);
+//        userService.signup("test@naver.com", "1234", "teacher1");
+//        courseService.register(
+//                1L,
+//                "코스1",
+//                "1234",
+//                "설명");
+//        lessonService.register("레슨","레슨설명", 1L, 1L, 1L);
 //        this.insertUser();
 //        this.insertCourse();
 //        this.addTeacher();
