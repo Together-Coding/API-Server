@@ -1,4 +1,4 @@
-# Auth, Data Server
+# Auth, Data API Server
 authentication, providing data
 
 ## API Docs
