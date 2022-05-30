@@ -70,70 +70,70 @@ public class ApiCommandLineRunner implements CommandLineRunner {
     }
 
 
-    private void addTeacher() {
-        courseService.updateTeacher("teacher10@naver.com", 1L);
-        courseService.updateTeacher("teacher10@naver.com", 30L);
-        courseService.updateTeacher("teacher9@naver.com", 2L);
-        courseService.updateTeacher("teacher9@naver.com", 29L);
-        courseService.updateTeacher("teacher8@naver.com", 3L);
-        courseService.updateTeacher("teacher8@naver.com", 28L);
-        courseService.updateTeacher("teacher7@naver.com", 4L);
-        courseService.updateTeacher("teacher7@naver.com", 27L);
-        courseService.updateTeacher("teacher6@naver.com", 5L);
-        courseService.updateTeacher("teacher6@naver.com", 26L);
-        courseService.updateTeacher("teacher5@naver.com", 6L);
-        courseService.updateTeacher("teacher5@naver.com", 25L);
-        courseService.updateTeacher("teacher4@naver.com", 7L);
-        courseService.updateTeacher("teacher4@naver.com", 24L);
-        courseService.updateTeacher("teacher3@naver.com", 8L);
-        courseService.updateTeacher("teacher3@naver.com", 23L);
-        courseService.updateTeacher("teacher2@naver.com", 9L);
-        courseService.updateTeacher("teacher2@naver.com", 22L);
-        courseService.updateTeacher("teacher1@naver.com", 10L);
-        courseService.updateTeacher("teacher1@naver.com", 21L);
-    }
-
-    private void insertParticipants() {
-        courseService.addUser(101L,
-                new ArrayList<>(List.of(
-                        "student100@naver.com",
-                        "student99@naver.com",
-                        "student98@naver.com",
-                        "student97@naver.com",
-                        "student96@naver.com",
-                        "student95@naver.com")
-                ),21L);
-        courseService.addUser(102L,
-                new ArrayList<>(List.of(
-                        "teacher1@naver.com",
-                        "student92@naver.com",
-                        "student90@naver.com",
-                        "student97@naver.com",
-                        "student81@naver.com",
-                        "student83@naver.com")
-                ),9L);
-        courseService.addUser(106L,
-                new ArrayList<>(List.of(
-                        "student11@naver.com",
-                        "student12@naver.com",
-                        "student13@naver.com",
-                        "teacher1@naver.com",
-                        "student92@naver.com",
-                        "student90@naver.com",
-                        "student97@naver.com",
-                        "student81@naver.com",
-                        "student83@naver.com")
-                ),26L);
-        courseService.addUser(101L,
-                new ArrayList<>(List.of(
-                        "student10@naver.com",
-                        "student9@naver.com",
-                        "student8@naver.com",
-                        "student7@naver.com",
-                        "student6@naver.com",
-                        "student5@naver.com")
-                ),10L);
-
-
-    }
+//    private void addTeacher() {
+//        courseService.updateTeacher("teacher10@naver.com", 1L);
+//        courseService.updateTeacher("teacher10@naver.com", 30L);
+//        courseService.updateTeacher("teacher9@naver.com", 2L);
+//        courseService.updateTeacher("teacher9@naver.com", 29L);
+//        courseService.updateTeacher("teacher8@naver.com", 3L);
+//        courseService.updateTeacher("teacher8@naver.com", 28L);
+//        courseService.updateTeacher("teacher7@naver.com", 4L);
+//        courseService.updateTeacher("teacher7@naver.com", 27L);
+//        courseService.updateTeacher("teacher6@naver.com", 5L);
+//        courseService.updateTeacher("teacher6@naver.com", 26L);
+//        courseService.updateTeacher("teacher5@naver.com", 6L);
+//        courseService.updateTeacher("teacher5@naver.com", 25L);
+//        courseService.updateTeacher("teacher4@naver.com", 7L);
+//        courseService.updateTeacher("teacher4@naver.com", 24L);
+//        courseService.updateTeacher("teacher3@naver.com", 8L);
+//        courseService.updateTeacher("teacher3@naver.com", 23L);
+//        courseService.updateTeacher("teacher2@naver.com", 9L);
+//        courseService.updateTeacher("teacher2@naver.com", 22L);
+//        courseService.updateTeacher("teacher1@naver.com", 10L);
+//        courseService.updateTeacher("teacher1@naver.com", 21L);
+//    }
+//
+//    private void insertParticipants() {
+//        courseService.addUser(101L,
+//                new ArrayList<>(List.of(
+//                        "student100@naver.com",
+//                        "student99@naver.com",
+//                        "student98@naver.com",
+//                        "student97@naver.com",
+//                        "student96@naver.com",
+//                        "student95@naver.com")
+//                ),21L);
+//        courseService.addUser(102L,
+//                new ArrayList<>(List.of(
+//                        "teacher1@naver.com",
+//                        "student92@naver.com",
+//                        "student90@naver.com",
+//                        "student97@naver.com",
+//                        "student81@naver.com",
+//                        "student83@naver.com")
+//                ),9L);
+//        courseService.addUser(106L,
+//                new ArrayList<>(List.of(
+//                        "student11@naver.com",
+//                        "student12@naver.com",
+//                        "student13@naver.com",
+//                        "teacher1@naver.com",
+//                        "student92@naver.com",
+//                        "student90@naver.com",
+//                        "student97@naver.com",
+//                        "student81@naver.com",
+//                        "student83@naver.com")
+//                ),26L);
+//        courseService.addUser(101L,
+//                new ArrayList<>(List.of(
+//                        "student10@naver.com",
+//                        "student9@naver.com",
+//                        "student8@naver.com",
+//                        "student7@naver.com",
+//                        "student6@naver.com",
+//                        "student5@naver.com")
+//                ),10L);
+//
+//
+//    }
 }

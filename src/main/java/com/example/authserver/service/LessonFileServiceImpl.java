@@ -38,7 +38,13 @@ public class LessonFileServiceImpl implements LessonFileService {
                 .build();
         lessonFileRepository.save(lessonFile);
 
+        LessonFile file = lesson.getLessonFile();
         lesson.updateLessonFile(lessonFile);
+        if (file != null) {
+            lessonFileRepository.deleteById(file.getId());
+        }
+
+
     }
 
     @Override

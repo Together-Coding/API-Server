@@ -1,7 +1,6 @@
 package com.example.authserver.controller;
 
 import com.example.authserver.dto.CourseDTO;
-import com.example.authserver.dto.LessonDTO;
 import com.example.authserver.security.dto.AuthUserDTO;
 import com.example.authserver.service.CourseService;
 import lombok.RequiredArgsConstructor;
@@ -35,9 +34,11 @@ public class CourseController {
 
     // 테스트 완료
     @PutMapping("/teacher")
-    public void addTeacher(@RequestBody @Valid CourseDTO.AddTeacher teacherDTO) {
+    public void addTeacher(@AuthenticationPrincipal AuthUserDTO authUser,
+                           @RequestBody @Valid CourseDTO.AddTeacher teacherDTO) {
 
         courseService.updateTeacher(
+                authUser.getId(),
                 teacherDTO.getTeacherEmail(),
                 teacherDTO.getCourseId());
     }

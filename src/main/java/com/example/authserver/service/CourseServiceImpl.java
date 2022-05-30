@@ -85,13 +85,17 @@ public class CourseServiceImpl implements CourseService {
 
     @Override
     @Transactional
-    public void updateTeacher(String teacherEmail, Long courseId) {
+    public void updateTeacher(Long userId, String teacherEmail, Long courseId) {
         User user = userService.getUserByEmail(teacherEmail);
         Course course = courseRepository.findById(courseId)
                 .orElseThrow(() -> new NotFoundException("can not find course. input courseId: " + courseId));
+        if (!course.getUser().getId().equals(userId)) {
+            throw new ForbiddenException("권한이 없습니다.");
+        }
         course.updateUser(user);
         Participant participant = participantRepository.findByCourse_IdAndRole(courseId, ParticipantRole.TEACHER);
         participant.updateUser(user);
+        participant.updateNickname("");
     }
 
     @Override
@@ -106,31 +110,6 @@ public class CourseServiceImpl implements CourseService {
         course.updatePw(enPw);
         courseRepository.save(course);
     }
-
-//    @Override
-//    @Transactional
-//    public void updateAccessible(Long userId, Long courseId, int status) {
-//        Participant participant = participantRepository.getParticipantByCourse_IdAndUser_Id(courseId, userId);
-//        if (!participant.getRole().equals(ParticipantRole.TEACHER)) {
-//            throw new ForbiddenException("권한이 없습니다.");
-//        }
-//        Course course = courseRepository.findById(courseId)
-//                .orElseThrow(() -> new NotFoundException("can not find course. input courseId: " + courseId));
-//        course.updateAccessible(status);
-//    }
-
-//    @Override
-//    @Transactional
-//    public void updateActive(Long userId, Long courseId, int status) {
-//        Participant participant = participantRepository.getParticipantByCourse_IdAndUser_Id(courseId, userId);
-//        if (!participant.getRole().equals(ParticipantRole.TEACHER)) {
-//            throw new ForbiddenException("권한이 없습니다.");
-//        }
-//        Course course = courseRepository.findById(courseId)
-//                .orElseThrow(() -> new NotFoundException("can not find course. input courseId: " + courseId));
-//        course.updateActive(status);
-//    }
-
 
     @Override
     @Transactional
