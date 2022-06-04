@@ -17,7 +17,7 @@ import javax.persistence.*;
 @Table(name = "participants",
         uniqueConstraints = {@UniqueConstraint(
                 name = "part_uk",
-                columnNames = {"user_Id", "course_Id"}
+                columnNames = {"user_id", "course_id"}
         )})
 public class Participant extends AuditingCreateEntity {
 
