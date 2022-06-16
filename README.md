@@ -2,7 +2,7 @@
 authentication, providing data
 
 ## 소개 PPT
-- https://docs.google.com/presentation/d/1TaVyeGRsqvRm0GGXkUD_0FZJROaojYagWJY2Sfyle0A/edit#slide=id.gc6f73a04f_0_0
+- https://docs.google.com/presentation/d/1I93ydG-JnMki0cbjjs-A05gPqOffNdZvsMBgXaug7A8/edit#slide=id.g1340ec37346_3_987
 
 ## API Docs
 - https://github.com/Together-Coding/Authentication-Server/wiki/API-%EB%AC%B8%EC%84%9C
