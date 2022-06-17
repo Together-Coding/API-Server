@@ -11,3 +11,7 @@ authentication, providing data
 - https://github.com/Together-Coding/Authentication-Server/wiki/API-%EB%AC%B8%EC%84%9C
 
 ![image](https://user-images.githubusercontent.com/99577463/172833892-c1fae11f-8b61-4043-b439-dc7b77c525e2.png)
+
+## ERD Diagram
+
+![image](https://user-images.githubusercontent.com/99577463/174299807-173b7734-2146-471c-9228-a7050943852b.png)
