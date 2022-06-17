@@ -1,6 +1,9 @@
 # Auth, Data API Server
 authentication, providing data
 
+## 시연 영상
+- https://youtu.be/znzmxhIVmqs
+
 ## 소개 PPT
 - https://docs.google.com/presentation/d/1I93ydG-JnMki0cbjjs-A05gPqOffNdZvsMBgXaug7A8/edit#slide=id.g1340ec37346_3_987
 
