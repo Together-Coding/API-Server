@@ -13,9 +13,6 @@
 ## 소개 PPT
 - https://docs.google.com/presentation/d/1I93ydG-JnMki0cbjjs-A05gPqOffNdZvsMBgXaug7A8/edit#slide=id.g1340ec37346_3_987
 
-## 최종 보고서
-- https://docs.google.com/document/d/1oDQhK2j8p_XlUbWM7ihWkNecXdtHyCEc
-
 ## API Docs
 - https://github.com/Together-Coding/Authentication-Server/wiki/API-%EB%AC%B8%EC%84%9C
 
